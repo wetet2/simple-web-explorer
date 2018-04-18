@@ -17,19 +17,13 @@ a{
     text-decoration: none;
     color: #000;
     font-weight: 400;
-    &:visited{
-        color: #999;
-    }
+    // &:visited{
+    //     color: #999;
+    // }
 }
 .t-center{text-align: center !important}
 .t-right{text-align: right !important}
 
-.publish{
-    width: 800px;
-    padding: 10px 20px 50px 20px;
-
-    margin: 0 auto;
-}
 .publish-title{
     display: flex;
     align-items: center;
@@ -40,7 +34,7 @@ a{
     font-family: sans-serif;
     color: #666;
     border-bottom: 1px solid #ddd;
-    padding: 5px 10px;
+    padding: 10px 10px;
     box-shadow: 0px 0px 10px 0px #cecece;
 
     span{
@@ -50,6 +44,12 @@ a{
         vertical-align: 2px;
         margin-left: 10px;
     }
+}
+.publish{
+    width: 800px;
+    padding: 10px 20px 50px 20px;
+
+    margin: 0 auto;
 }
 .file-table{
     tr td{
@@ -67,10 +67,29 @@ a{
             text-align: right;
         }
 
+        &.file-name.last-page a{
+            color: #1a64ba;
+            font-weight: bold;
+        }
+
     }
 
     tr.recent {
-        background-color: #fffdf3;
+        // background-color: #fffdf3;
+        td.file-name:after{
+            // content:'N';
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
+            border-radius: 16px;
+            background-color: #ed654d;
+            color: #fff;
+            font-size: 10px;
+            font-weight: bold;
+            text-align: center;
+        }
     }
 
     tr:hover{
@@ -124,6 +143,7 @@ a{
 @media (max-width: 767px){
     .publish-title{
         justify-content: flex-start;
+        padding: 15px 10px;
     }
     .publish{
         width: 100%;
@@ -131,7 +151,7 @@ a{
 
     .file-table{
         tr td{
-            padding: 2px 10px;
+            padding: 5px 10px;
         }
         td.date,
         td.file-size{

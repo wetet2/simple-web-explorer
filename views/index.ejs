@@ -8,9 +8,23 @@
     <title>Publish</title>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <script type="text/javascript">
+
+        var cookieName = 'lastPage';
         $(document).ready(function(){
+            var lastPage =  decodeURIComponent($.cookie(cookieName));
+            $('.file-name a').each(function(i ,e){
+                if($(e).attr('href') === lastPage){
+                    $(e).closest('td').addClass('last-page');
+                    return false;
+                }
+            })
         })
+        function moveTo(path){
+            $.cookie(cookieName, path, { expires: 1, path: '/'});
+            window.location.href= path;
+        }
     </script>
 </head>
 
@@ -51,12 +65,16 @@
             <% } %>
 
             <% for(var i=0; i < fileArr.length ; i++) { %>
-                <tr class="files <%= fileArr[i].isRecent ? 'recent' : '' %>" onclick="location.href='<%= path + "/" + fileArr[i].fileName %>'">
+                <tr class="files <%= fileArr[i].isRecent ? 'recent' : '' %>"
+                    onclick="moveTo('<%= (path ==='/' ? '' : path) + "/" + fileArr[i].fileName %>')">
                     <td>
                         <img src="/images/<%= fileArr[i].icon %>.svg">
                     </td>
                     <td class="file-name">
-                        <a href="<%= (path ==='/' ? '' : path) + '/' + fileArr[i].fileName %>"><%= fileArr[i].fileName %></a>
+                        <a href="<%= (path ==='/' ? '' : path) + '/' + fileArr[i].fileName %>">
+                            <%= fileArr[i].fileName %>
+                            <img src="/images/new.svg" width="12px" style="display:<%= fileArr[i].isRecent ? 'inline' : 'none' %>">
+                        </a>
                     </td>
                     <td class="file-size">
                         <%= fileArr[i].size %>

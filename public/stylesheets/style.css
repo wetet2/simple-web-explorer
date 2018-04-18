@@ -21,22 +21,12 @@ a {
 	font-weight: 400;
 }
 
-a:visited {
-	color: #999;
-}
-
 .t-center {
 	text-align: center !important;
 }
 
 .t-right {
 	text-align: right !important;
-}
-
-.publish {
-	width: 800px;
-	padding: 10px 20px 50px 20px;
-	margin: 0 auto;
 }
 
 .publish-title {
@@ -48,7 +38,7 @@ a:visited {
 	font-family: sans-serif;
 	color: #666;
 	border-bottom: 1px solid #ddd;
-	padding: 5px 10px;
+	padding: 10px 10px;
 	box-shadow: 0px 0px 10px 0px #cecece;
 }
 
@@ -58,6 +48,12 @@ a:visited {
 	color: #555;
 	vertical-align: 2px;
 	margin-left: 10px;
+}
+
+.publish {
+	width: 800px;
+	padding: 10px 20px 50px 20px;
+	margin: 0 auto;
 }
 
 .file-table tr td {
@@ -76,8 +72,23 @@ a:visited {
 	text-align: right;
 }
 
-.file-table tr.recent {
-	background-color: #fffdf3;
+.file-table tr td.file-name.last-page a {
+	color: #1a64ba;
+	font-weight: bold;
+}
+
+.file-table tr.recent td.file-name:after {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 16px;
+	height: 16px;
+	border-radius: 16px;
+	background-color: #ed654d;
+	color: #fff;
+	font-size: 10px;
+	font-weight: bold;
+	text-align: center;
 }
 
 .file-table tr:hover td {
@@ -132,12 +143,13 @@ a:visited {
 @media (max-width: 767px) {
 	.publish-title {
 		justify-content: flex-start;
+		padding: 15px 10px;
 	}
 	.publish {
 		width: 100%;
 	}
 	.file-table tr td {
-		padding: 2px 10px;
+		padding: 5px 10px;
 	}
 	.file-table td.date,
 	.file-table td.file-size {
