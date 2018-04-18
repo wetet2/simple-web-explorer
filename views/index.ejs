@@ -65,7 +65,7 @@
                     <a href="<%= (path ==='/' ? '' : path) + '/' + fileArr[i].fileName %>">
                         <%= fileArr[i].fileName %>
                         <img src="/images/new.svg" width="12px" class="<%= fileArr[i].isRecentCreated ? '' : 'hide' %>">
-                        <img src="/images/modified.svg" width="12px" class="<%= fileArr[i].isRecentModified ? '' : 'hide' %>">
+                        <img src="/images/updated.svg" width="12px" class="<%= fileArr[i].isRecentUpdated ? '' : 'hide' %>">
                     </a>
                 </td>
                 <td class="file-size"><%= fileArr[i].size %></td>

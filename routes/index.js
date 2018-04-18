@@ -88,9 +88,8 @@ function getFiles(path, arr){
             fileArr.push({
                 fileName: e,
                 mDate: moment(stat.mtime).format('YYYY-MM-DD HH:mm:ss'),
-                isRecentModified: moment(stat.mtime).isSame(new Date(), "day"),
+                isRecentUpdated: moment(stat.mtime).isSame(new Date(), "day"),
                 isRecentCreated: moment(stat.birthtime).isSame(new Date(), "day"),
-                // isRecentCreated: false,
                 icon: getIcon(e),
                 size: getFileSize(stat.size)
             })
