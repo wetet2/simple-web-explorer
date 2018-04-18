@@ -56,13 +56,13 @@
                         <img src="/images/<%= fileArr[i].icon %>.svg">
                     </td>
                     <td class="file-name">
-                        <a href="<%= path + '/' + fileArr[i].fileName %>"><%= fileArr[i].fileName %></a>
+                        <a href="<%= (path ==='/' ? '' : path) + '/' + fileArr[i].fileName %>"><%= fileArr[i].fileName %></a>
                     </td>
                     <td class="file-size">
                         <%= fileArr[i].size %>
                     </td>
                     <td class="date">
-                        <a href="<%= path + '/' + fileArr[i].fileName %>"><%= fileArr[i].mDate %></a>
+                        <a href="<%= (path ==='/' ? '' : path) + '/' + fileArr[i].fileName %>"><%= fileArr[i].mDate %></a>
 
                     </td>
                 </tr>
