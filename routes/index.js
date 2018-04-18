@@ -97,7 +97,6 @@ function getFiles(path, arr){
             })
         }
     })
-    console.log(fileArr);
     return fileArr;
 }
 
