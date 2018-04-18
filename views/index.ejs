@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <title>퍼블리싱 목록</title>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+        })
+    </script>
+</head>
+
+<body>
+
+    <div class="publish-title">Publish List <span>( <%= path %> )</span></div>
+
+    <div class="publish">
+
+        <table class="file-table">
+            <colgroup>
+                <col style="width:30px;" />
+                <col style="width:auto;" />
+                <col style="width:80px;" />
+                <col style="width:155px;" />
+            </colgroup>
+            <tr onclick="location.href='<%= (prevPath === '' ? '/' : prevPath)  %>'">
+                <td class="icon">
+                    <img src="/images/folder.svg">
+                </td>
+                <td colspan="3" class="link-folder">
+                    <a class="prev-folder" href="<%= (prevPath === '' ? '/' : prevPath)  %>">..</a>
+                </td>
+            </tr>
+            <% for(var i=0; i < folderArr.length ; i++) { %>
+                <tr class="folders" onclick="location.href='<%= (path === '/' ? '' : path) + '/' + folderArr[i]  %>'">
+                    <td class="icon">
+                        <img src="/images/folder.svg">
+                    </td>
+                    <td colspan="3" class="link-folder">
+                        <a href="<%= (path === '/' ? '' : path) + '/' + folderArr[i]  %>"><%= folderArr[i] %></a>
+                    </td>
+                </tr>
+            <% } %>
+
+            <% for(var i=0; i < fileArr.length ; i++) { %>
+                <tr class="files <%= fileArr[i].isRecent ? 'recent' : '' %>" onclick="location.href='<%= path + "/" + fileArr[i].fileName %>'">
+                    <td>
+                        <img src="/images/<%= fileArr[i].icon %>.svg">
+                    </td>
+                    <td class="file-name">
+                        <a href="<%= path + '/' + fileArr[i].fileName %>"><%= fileArr[i].fileName %></a>
+                    </td>
+                    <td class="file-size">
+                        <%= fileArr[i].size %>
+                    </td>
+                    <td class="date">
+                        <a href="<%= path + '/' + fileArr[i].fileName %>"><%= fileArr[i].mDate %></a>
+
+                    </td>
+                </tr>
+            <% } %>
+
+        </table>
+    </div>
+
+
+</body>
+
+</html>
