@@ -35,7 +35,14 @@ a{
     color: #666;
     border-bottom: 1px solid #ddd;
     padding: 10px 10px;
-    box-shadow: 0px 0px 10px 0px #cecece;
+    box-shadow: 0px 0px 10px -2px #cecece;
+
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
 
     span{
         font-size: 14px;
@@ -49,7 +56,9 @@ a{
     width: 800px;
     padding: 10px 20px 50px 20px;
 
+
     margin: 0 auto;
+    margin-top: 45px;
 }
 .file-table{
     tr td{
