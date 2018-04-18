@@ -55,7 +55,7 @@ a:visited {
 .publish-title span {
 	font-size: 14px;
 	font-weight: 400;
-	color: #999;
+	color: #555;
 	vertical-align: 2px;
 	margin-left: 10px;
 }
@@ -66,18 +66,22 @@ a:visited {
 	border-bottom: 1px solid #eee;
 }
 
-.file-table td a.prev-folder {
+.file-table tr td a.prev-folder {
 	display: inline-block;
 	width: 50px;
 	letter-spacing: 2px;
 }
 
-.file-table td.date {
+.file-table tr td.date {
 	text-align: right;
 }
 
 .file-table tr.recent {
 	background-color: #fffdf3;
+}
+
+.file-table tr:hover td {
+	background-color: #f6f6f6;
 }
 
 .file-table tr.folders {

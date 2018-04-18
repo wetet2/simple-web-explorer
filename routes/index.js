@@ -2,15 +2,15 @@ var express = require('express');
 var moment = require('moment');
 var router = express.Router();
 var fs = require('fs');
+var config = require('../config');
 
-const rootPath = require('path').dirname(require.main.filename);
-const outputPath = rootPath + '/output'
+const rootPath = config.root;
 
 /* GET home page. */
 router.get('/*/', function(req, res, next) {
 
     let url = decodeURIComponent(req.url);
-    const path = outputPath + url;
+    const path = rootPath + url;
 
     fs.lstat(path, (err, stat) => {
 
@@ -21,7 +21,6 @@ router.get('/*/', function(req, res, next) {
 
         if(stat.isDirectory()){
             fs.readdir(path, (err, files) => {
-                console.log('폴더임');
                 if(err){
                     res.render('index', {
                         folderArr: [],
@@ -52,7 +51,6 @@ router.get('/*/', function(req, res, next) {
             });
         }
         else if(stat.isFile()){
-            console.log('파일임');
             res.sendfile(path);
 
         }

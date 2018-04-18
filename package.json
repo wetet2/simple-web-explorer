@@ -1,9 +1,9 @@
 {
-  "name": "publish-list",
+  "name": "node-file-list",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "forever start server.js"
+    "start": "node server.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",

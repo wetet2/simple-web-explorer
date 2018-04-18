@@ -46,7 +46,7 @@ a{
     span{
         font-size: 14px;
         font-weight: 400;
-        color: #999;
+        color: #555;
         vertical-align: 2px;
         margin-left: 10px;
     }
@@ -58,9 +58,6 @@ a{
 
         border-bottom: 1px solid #eee;
 
-    }
-
-    td{
         a.prev-folder{
             display: inline-block;
             width: 50px;
@@ -69,13 +66,17 @@ a{
         &.date{
             text-align: right;
         }
+
     }
 
     tr.recent {
         background-color: #fffdf3;
-        // td.date a{
-        //     font-weight: 700;
-        // }
+    }
+
+    tr:hover{
+        td{
+            background-color: #f6f6f6;
+        }
     }
 
     tr.folders{
