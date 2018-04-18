@@ -1,10 +1,7 @@
 @import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
-@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
-
 *{margin:0;padding:0;box-sizing: border-box;}
 
 $font-nanum: 'Nanum Gothic', sans-serif;
-$font-noto: 'Noto Sans KR', 'Nanum Gothic', sans-serif;
 
 html,body{
     font-family: $font-nanum;
@@ -17,12 +14,10 @@ a{
     text-decoration: none;
     color: #000;
     font-weight: 400;
-    // &:visited{
-    //     color: #999;
-    // }
 }
 .t-center{text-align: center !important}
 .t-right{text-align: right !important}
+.hide{display: none;}
 
 .publish-title{
     display: flex;
@@ -64,40 +59,13 @@ a{
     tr td{
         padding: 5px 10px;
         font-size: 14px;
-
         border-bottom: 1px solid #eee;
 
-        a.prev-folder{
-            display: inline-block;
-            width: 50px;
-            letter-spacing: 2px;
+        &:first-child{
+            padding-left: 3px;
         }
-        &.date{
-            text-align: right;
-        }
-
-        &.file-name.last-page a{
-            color: #1a64ba;
-            font-weight: bold;
-        }
-
-    }
-
-    tr.recent {
-        // background-color: #fffdf3;
-        td.file-name:after{
-            // content:'N';
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 16px;
-            height: 16px;
-            border-radius: 16px;
-            background-color: #ed654d;
-            color: #fff;
-            font-size: 10px;
-            font-weight: bold;
-            text-align: center;
+        &:last-child{
+            padding-right: 3px;
         }
     }
 
@@ -109,21 +77,21 @@ a{
 
     tr.folders{
         cursor: pointer;
-        td.icon{
+        td:first-child{
             text-align: center;
             img{
                 vertical-align: -3px;
             }
         }
-        td.link-folder{
+        td.folder-name{
             font-size: 14px;
-            a{
-                display: inline-block;
-                min-width: 80px;
-                font-weight: bold;
-                text-decoration: none;
-                color: #666;
-            }
+            font-weight: bold;
+            color: #666;
+            padding-left: 0;
+        }
+
+        &.prev-folder{
+            letter-spacing: 2px;
         }
     }
 
@@ -132,20 +100,23 @@ a{
         td{
             font-size: 13px;
         }
+        td.file-name{
+            line-height: 19px;
+            padding-left: 0;
+        }
+        td.file-name.last-page a{
+            color: #1a64ba;
+            font-weight: bold;
+        }
         td.file-size{
             text-align: right;
             font-size: 12px;
         }
+        td.date{
+            font-size: 12px;
+            text-align: right;
+        }
     }
-
-    tr td:first-child{
-        padding-left: 0;
-    }
-    tr td:last-child{
-        padding-right: 0;
-    }
-
-
 
 }
 
@@ -160,7 +131,7 @@ a{
 
     .file-table{
         tr td{
-            padding: 5px 10px;
+            padding: 7px 10px;
         }
         td.date,
         td.file-size{

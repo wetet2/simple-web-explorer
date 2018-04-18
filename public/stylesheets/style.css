@@ -1,5 +1,4 @@
 @import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
-@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
 * {
 	margin: 0;
 	padding: 0;
@@ -27,6 +26,10 @@ a {
 
 .t-right {
 	text-align: right !important;
+}
+
+.hide {
+	display: none;
 }
 
 .publish-title {
@@ -68,33 +71,12 @@ a {
 	border-bottom: 1px solid #eee;
 }
 
-.file-table tr td a.prev-folder {
-	display: inline-block;
-	width: 50px;
-	letter-spacing: 2px;
+.file-table tr td:first-child {
+	padding-left: 3px;
 }
 
-.file-table tr td.date {
-	text-align: right;
-}
-
-.file-table tr td.file-name.last-page a {
-	color: #1a64ba;
-	font-weight: bold;
-}
-
-.file-table tr.recent td.file-name:after {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	width: 16px;
-	height: 16px;
-	border-radius: 16px;
-	background-color: #ed654d;
-	color: #fff;
-	font-size: 10px;
-	font-weight: bold;
-	text-align: center;
+.file-table tr td:last-child {
+	padding-right: 3px;
 }
 
 .file-table tr:hover td {
@@ -105,24 +87,23 @@ a {
 	cursor: pointer;
 }
 
-.file-table tr.folders td.icon {
+.file-table tr.folders td:first-child {
 	text-align: center;
 }
 
-.file-table tr.folders td.icon img {
+.file-table tr.folders td:first-child img {
 	vertical-align: -3px;
 }
 
-.file-table tr.folders td.link-folder {
+.file-table tr.folders td.folder-name {
 	font-size: 14px;
+	font-weight: bold;
+	color: #666;
+	padding-left: 0;
 }
 
-.file-table tr.folders td.link-folder a {
-	display: inline-block;
-	min-width: 80px;
-	font-weight: bold;
-	text-decoration: none;
-	color: #666;
+.file-table tr.folders.prev-folder {
+	letter-spacing: 2px;
 }
 
 .file-table tr.files {
@@ -133,17 +114,24 @@ a {
 	font-size: 13px;
 }
 
+.file-table tr.files td.file-name {
+	line-height: 19px;
+	padding-left: 0;
+}
+
+.file-table tr.files td.file-name.last-page a {
+	color: #1a64ba;
+	font-weight: bold;
+}
+
 .file-table tr.files td.file-size {
 	text-align: right;
 	font-size: 12px;
 }
 
-.file-table tr td:first-child {
-	padding-left: 0;
-}
-
-.file-table tr td:last-child {
-	padding-right: 0;
+.file-table tr.files td.date {
+	font-size: 12px;
+	text-align: right;
 }
 
 @media (max-width: 767px) {
@@ -155,7 +143,7 @@ a {
 		width: 100%;
 	}
 	.file-table tr td {
-		padding: 5px 10px;
+		padding: 7px 10px;
 	}
 	.file-table td.date,
 	.file-table td.file-size {

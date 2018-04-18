@@ -31,7 +31,6 @@ router.get('/*/', function(req, res, next) {
                     return;
                 }
 
-                //파일과 폴더 분리
                 var fileArr = getFiles(path, files);
                 var folderArr = getFolders(path, files);
 
@@ -51,10 +50,8 @@ router.get('/*/', function(req, res, next) {
             });
         }
         else if(stat.isFile()){
-            res.sendfile(path);
-
+            res.sendFile(path);
         }
-
 
     });
 
@@ -66,7 +63,8 @@ var iconList =
     ,'html','jpg','js','json','mp3'
     ,'mp4','pdf','png','ppt','pptx'
     ,'psd','scss','txt','unknown','xls'
-    ,'xlsx','xml','zip','7z','alz']
+    ,'xlsx','xml','zip','7z','alz'];
+
 function getIcon(name){
     var ext = name.split('.')[name.split('.').length - 1];
     if(iconList.indexOf(ext) > -1) return ext;
@@ -81,7 +79,6 @@ function getFileSize(bytes){
         return '1 KB';
     }
 }
-
 function getFiles(path, arr){
     let fileArr = [];
     arr.forEach((e,i) => {
@@ -91,7 +88,9 @@ function getFiles(path, arr){
             fileArr.push({
                 fileName: e,
                 mDate: moment(stat.mtime).format('YYYY-MM-DD HH:mm:ss'),
-                isRecent: moment(stat.mtime).isSame(new Date(), "day"),
+                isRecentModified: moment(stat.mtime).isSame(new Date(), "day"),
+                isRecentCreated: moment(stat.birthtime).isSame(new Date(), "day"),
+                // isRecentCreated: false,
                 icon: getIcon(e),
                 size: getFileSize(stat.size)
             })
@@ -99,7 +98,6 @@ function getFiles(path, arr){
     })
     return fileArr;
 }
-
 function getFolders(path, arr){
     let folderArr = [];
     arr.forEach((e,i) => {

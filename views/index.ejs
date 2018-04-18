@@ -21,9 +21,9 @@
                 }
             })
         })
-        function moveTo(path){
-            $.cookie(cookieName, path, { expires: 1, path: '/'});
-            window.location.href= path;
+        function moveTo(path, isFile){
+            if(isFile) $.cookie(cookieName, path, { expires: 1, path: '/'});
+            window.location.href = path;
         }
     </script>
 </head>
@@ -39,51 +39,38 @@
                 <col style="width:30px;" />
                 <col style="width:auto;" />
                 <col style="width:80px;" />
-                <col style="width:155px;" />
+                <col style="width:145px;" />
             </colgroup>
-            <tr onclick="location.href='<%= (prevPath === '' ? '/' : prevPath)  %>'">
-                <td class="icon">
-                    <img src="/images/folder.svg">
-                </td>
-                <td class="link-folder">
-                    <a class="prev-folder" href="<%= (prevPath === '' ? '/' : prevPath)  %>">..</a>
-                </td>
+
+            <tr class="folders" onclick="moveTo('<%= (prevPath === '' ? '/' : prevPath)  %>')">
+                <td><img src="/images/folder.svg"></td>
+                <td class="folder-name prev-folder">..</td>
                 <td class="file-size"></td>
                 <td class="date"></td>
             </tr>
+
             <% for(var i=0; i < folderArr.length ; i++) { %>
-                <tr class="folders" onclick="location.href='<%= (path === '/' ? '' : path) + '/' + folderArr[i]  %>'">
-                    <td class="icon">
-                        <img src="/images/folder.svg">
-                    </td>
-                    <td class="link-folder">
-                        <a href="<%= (path === '/' ? '' : path) + '/' + folderArr[i]  %>"><%= folderArr[i] %></a>
-                    </td>
-                    <td class="file-size"></td>
-                    <td class="date"></td>
-                </tr>
+            <tr class="folders" onclick="moveTo('<%= (path === '/' ? '' : path) + '/' + folderArr[i]  %>')">
+                <td><img src="/images/folder.svg"></td>
+                <td class="folder-name"><%= folderArr[i] %></td>
+                <td class="file-size"></td>
+                <td class="date"></td>
+            </tr>
             <% } %>
 
             <% for(var i=0; i < fileArr.length ; i++) { %>
-                <tr class="files <%= fileArr[i].isRecent ? 'recent' : '' %>"
-                    onclick="moveTo('<%= (path ==='/' ? '' : path) + "/" + fileArr[i].fileName %>')">
-                    <td>
-                        <img src="/images/<%= fileArr[i].icon %>.svg">
-                    </td>
-                    <td class="file-name">
-                        <a href="<%= (path ==='/' ? '' : path) + '/' + fileArr[i].fileName %>">
-                            <%= fileArr[i].fileName %>
-                            <img src="/images/new.svg" width="12px" style="display:<%= fileArr[i].isRecent ? 'inline' : 'none' %>">
-                        </a>
-                    </td>
-                    <td class="file-size">
-                        <%= fileArr[i].size %>
-                    </td>
-                    <td class="date">
-                        <a href="<%= (path ==='/' ? '' : path) + '/' + fileArr[i].fileName %>"><%= fileArr[i].mDate %></a>
-
-                    </td>
-                </tr>
+            <tr class="files" onclick="moveTo('<%= (path ==='/' ? '' : path) + "/" + fileArr[i].fileName %>', true)">
+                <td><img src="/images/<%= fileArr[i].icon %>.svg"></td>
+                <td class="file-name">
+                    <a href="<%= (path ==='/' ? '' : path) + '/' + fileArr[i].fileName %>">
+                        <%= fileArr[i].fileName %>
+                        <img src="/images/new.svg" width="12px" class="<%= fileArr[i].isRecentCreated ? '' : 'hide' %>">
+                        <img src="/images/modified.svg" width="12px" class="<%= fileArr[i].isRecentModified ? '' : 'hide' %>">
+                    </a>
+                </td>
+                <td class="file-size"><%= fileArr[i].size %></td>
+                <td class="date"><%= fileArr[i].mDate %></td>
+            </tr>
             <% } %>
 
         </table>
