@@ -11,7 +11,7 @@ then
 
 ``` npm start ```
 
-``` ![Image of Yaktocat](https://github.com/wetet2/node-file-list/blob/master/doc/pc_img.png) ```
+![Image of Yaktocat](https://github.com/wetet2/node-file-list/blob/master/doc/pc_img.png)  
   
 
 
