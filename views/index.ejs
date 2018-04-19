@@ -21,6 +21,11 @@
                     return false;
                 }
             })
+
+
+            $('.refresh').click(function(){
+                window.location.reload();
+            })
         })
         function moveTo(path, isFile){
             if(isFile) $.cookie(cookieName, path, { expires: 1, path: '/'});
@@ -31,7 +36,11 @@
 
 <body>
 
-    <div class="publish-title">Publish List <span>( <%= path %> )</span></div>
+    <div class="publish-title">
+        <label>Publish List</label>
+        <span class="path"><%= path !== '' ? '( '+path+' )' : '' %></span>
+        <img class="refresh" src="/images/refresh.svg" width="18px">
+    </div>
 
     <div class="publish">
 
