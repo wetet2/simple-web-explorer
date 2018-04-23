@@ -127,8 +127,7 @@ a {
 }
 
 .file-table tr.files td.file-name.last-page a {
-	color: #1a64ba;
-	font-weight: bold;
+	color: #006ff1;
 }
 
 .file-table tr.files td.file-size {
