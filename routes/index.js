@@ -91,8 +91,8 @@ function getFiles(path, arr){
             fileArr.push({
                 fileName: e,
                 mDate: moment(stat.mtime).format('YYYY-MM-DD HH:mm:ss'),
-                isRecentUpdated: moment(stat.mtime).isSame(new Date(), "day"),
-                isRecentCreated: moment(stat.birthtime).isSame(new Date(), "day"),
+                isRecentUpdated: isRecentUpdated(stat.mtime),
+                isRecentCreated: isRecentCreated(stat.birthtime),
                 icon: getIcon(e),
                 size: getFileSize(stat.size)
             })
@@ -100,6 +100,13 @@ function getFiles(path, arr){
     })
     return fileArr;
 }
+function isRecentUpdated(date){
+    return moment(date).isSame(moment(new Date()), "day")
+}
+function isRecentCreated(date){
+    return moment(date).isSameOrAfter(moment(new Date()), "day")
+}
+
 function getFolders(path, arr){
     let folderArr = [];
     arr.forEach((e,i) => {
