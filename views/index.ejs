@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>Publish</title>
 
@@ -57,42 +58,45 @@
     <div class="publish">
         <table class="file-table">
             <colgroup>
-                <col style="width:30px;" />
-                <col style="width:auto;" />
-                <col style="width:80px;" />
-                <col style="width:145px;" />
+                <col width="30px" style="width:30px;" />
+                <col width="auto" style="width:auto;" />
+                <col width="80px" style="width:80px;" />
+                <col width="145px" style="width:145px;" />
             </colgroup>
+            <tbody>
+                <tr class="folders" onclick="moveTo('<%= (prevPath === '' ? '/' : prevPath)  %>')">
+                    <td><img src="/images/folder.svg"></td>
+                    <td class="folder-name prev-folder">..</td>
+                    <td class="file-size"></td>
+                    <td class="date"></td>
+                </tr>
 
-            <tr class="folders" onclick="moveTo('<%= (prevPath === '' ? '/' : prevPath)  %>')">
-                <td><img src="/images/folder.svg"></td>
-                <td class="folder-name prev-folder">..</td>
-                <td class="file-size"></td>
-                <td class="date"></td>
-            </tr>
+                <% for(var i=0; i < folderArr.length ; i++) { %>
+                    <tr class="folders" onclick="moveTo('<%= (path === '/' ? '' : path) + '/' + folderArr[i]  %>')">
+                        <td><img src="/images/folder.svg"></td>
+                        <td class="folder-name"><%= folderArr[i] %></td>
+                        <td class="file-size"></td>
+                        <td class="date"></td>
+                    </tr>
+                <% } %>
 
-            <% for(var i=0; i < folderArr.length ; i++) { %>
-            <tr class="folders" onclick="moveTo('<%= (path === '/' ? '' : path) + '/' + folderArr[i]  %>')">
-                <td><img src="/images/folder.svg"></td>
-                <td class="folder-name"><%= folderArr[i] %></td>
-                <td class="file-size"></td>
-                <td class="date"></td>
-            </tr>
-            <% } %>
+                <% for(var i=0; i < fileArr.length ; i++) { %>
+                    <tr class="files" onclick="moveTo('<%= (path ==='/' ? '' : path) + "/" + fileArr[i].fileName %>', true)">
+                        <td><img src="/images/<%= fileArr[i].icon %>.svg"></td>
+                        <td class="file-name">
+                            <a href="<%= (path ==='/' ? '' : path) + '/' + fileArr[i].fileName %>">
+                                <%= fileArr[i].fileName %>
+                                <img src="/images/new.svg" width="12px" class="<%= fileArr[i].isRecentCreated ? '' : 'hide' %>">
+                                <img src="/images/updated.svg" width="12px" class="<%= fileArr[i].isRecentUpdated ? '' : 'hide' %>">
+                            </a>
+                        </td>
+                        <td class="file-size"><%= fileArr[i].size %></td>
+                        <td class="date"><%= fileArr[i].mDate %></td>
+                    </tr>
+                <% } %>
 
-            <% for(var i=0; i < fileArr.length ; i++) { %>
-            <tr class="files" onclick="moveTo('<%= (path ==='/' ? '' : path) + "/" + fileArr[i].fileName %>', true)">
-                <td><img src="/images/<%= fileArr[i].icon %>.svg"></td>
-                <td class="file-name">
-                    <a href="<%= (path ==='/' ? '' : path) + '/' + fileArr[i].fileName %>">
-                        <%= fileArr[i].fileName %>
-                        <img src="/images/new.svg" width="12px" class="<%= fileArr[i].isRecentCreated ? '' : 'hide' %>">
-                        <img src="/images/updated.svg" width="12px" class="<%= fileArr[i].isRecentUpdated ? '' : 'hide' %>">
-                    </a>
-                </td>
-                <td class="file-size"><%= fileArr[i].size %></td>
-                <td class="date"><%= fileArr[i].mDate %></td>
-            </tr>
-            <% } %>
+            </tbody>
+
         </table>
     </div>
 

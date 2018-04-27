@@ -76,6 +76,17 @@ a {
 
 .file-table tr td:first-child {
 	padding-left: 3px;
+	text-align: left;
+}
+
+.file-table tr td:first-child img {
+	width: 30px;
+	height: 30px;
+}
+
+.file-table tr td:nth-child(2) img {
+	width: 12px;
+	height: 12px;
 }
 
 .file-table tr td:last-child {
@@ -169,6 +180,14 @@ a {
 	.publish {
 		width: 100%;
 		margin-top: 65px;
+	}
+	.publish tr td:first-child img {
+		width: 20px;
+		height: 20px;
+	}
+	.publish tr td:nth-child(2) img {
+		width: 12px;
+		height: 12px;
 	}
 	.file-table td.date,
 	.file-table td.file-size {
