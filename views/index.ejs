@@ -4,17 +4,17 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi">
-    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon"/>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+
     <title>Publish</title>
 
+    <link rel='stylesheet' href='/stylesheets/style.css' />
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-    <script type="text/javascript">
+    <script src="/js/js.cookie.js"></script>
 
+    <script type="text/javascript">
         var cookieName = 'lastPage';
-        setInterval(function(){
-            var lastPage =  decodeURIComponent($.cookie(cookieName));
+        function setLastPage(){
+            var lastPage =  decodeURIComponent(Cookies.get(cookieName));
             $('.file-name a').closest('td').removeClass('last-page');
             $('.file-name a').each(function(i ,e){
                 if($(e).attr('href') === lastPage){
@@ -22,19 +22,27 @@
                     return false;
                 }
             })
-        }, 300)
+        }
+
+        var isSafari = /Safari/.test(navigator.userAgent) && /Apple/.test(navigator.vendor);
+        if(isSafari){
+            setLastPage();
+            setInterval(function(){
+                setLastPage();
+            }, 300)
+        }
 
         $(document).ready(function(){
+            setLastPage();
             $('.refresh').click(function(){
                 window.location.reload();
             })
         })
 
         function moveTo(path, isFile){
-            if(isFile) $.cookie(cookieName, path);
+            if(isFile) Cookies.set(cookieName, encodeURIComponent(path));
             window.location.href = path;
         }
-
     </script>
 </head>
 
@@ -47,7 +55,6 @@
     </div>
 
     <div class="publish">
-
         <table class="file-table">
             <colgroup>
                 <col style="width:30px;" />
@@ -86,10 +93,8 @@
                 <td class="date"><%= fileArr[i].mDate %></td>
             </tr>
             <% } %>
-
         </table>
     </div>
-
 
 </body>
 

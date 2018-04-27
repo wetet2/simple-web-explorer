@@ -29,7 +29,7 @@ router.get('/*/', function(req, res, next) {
                         folderArr: [],
                         fileArr : [],
                         path: url,
-                        prevPath: ''
+                        prevPath: '',
                     });
                     return;
                 }
