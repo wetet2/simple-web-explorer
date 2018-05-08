@@ -80,8 +80,8 @@ a {
 }
 
 .file-table tr td:first-child img {
-	width: 30px;
-	height: 30px;
+	width: 24px;
+	height: 24px;
 }
 
 .file-table tr td:nth-child(2) img {
@@ -192,5 +192,9 @@ a {
 	.file-table td.date,
 	.file-table td.file-size {
 		display: none;
+	}
+	.file-table tr td:first-child img {
+		width: 30px;
+		height: 30px;
 	}
 }

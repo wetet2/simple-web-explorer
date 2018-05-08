@@ -19,41 +19,46 @@ router.get('/*/', function(req, res, next) {
 
         if(err){
             console.log(err);
-            return;
-        }
+            res.send(500);
+        }else{
 
-        if(stat.isDirectory()){
-            fs.readdir(path, (err, files) => {
-                if(err){
+            if(stat.isDirectory()){
+                fs.readdir(path, (err, files) => {
+                    if(err){
+                        res.render('index', {
+                            folderArr: [],
+                            fileArr : [],
+                            path: url,
+                            prevPath: '',
+                        });
+                        return;
+                    }
+
+                    var fileArr = getFiles(path, files);
+                    var folderArr = getFolders(path, files);
+
+                    var pathArr = url.split('/');
+                    var pathCount = pathArr.length;
+                    pathArr = pathArr.filter((e, i) => {
+                        return i !== pathCount - 1;
+                    })
+
                     res.render('index', {
-                        folderArr: [],
-                        fileArr : [],
+                        folderArr,
+                        fileArr,
                         path: url,
-                        prevPath: '',
+                        prevPath: pathArr.join('/')
                     });
-                    return;
-                }
 
-                var fileArr = getFiles(path, files);
-                var folderArr = getFolders(path, files);
-
-                var pathArr = url.split('/');
-                var pathCount = pathArr.length;
-                pathArr = pathArr.filter((e, i) => {
-                    return i !== pathCount - 1;
-                })
-
-                res.render('index', {
-                    folderArr,
-                    fileArr,
-                    path: url,
-                    prevPath: pathArr.join('/')
                 });
-
-            });
-        }
-        else if(stat.isFile()){
-            res.sendFile(path);
+            }
+            else if(stat.isFile()){
+                // res.type('application/octet-stream');
+                res.sendFile(path);
+            }else{
+                res.statusMessage = 'Neither file nor directory';
+                res.send(500);
+            }
         }
 
     });
