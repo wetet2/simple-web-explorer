@@ -10,10 +10,16 @@ const rootPath = config.root;
 router.get('/*/', function(req, res, next) {
 
     let url = decodeURIComponent(req.url);
+    if(url.indexOf('?') >= 0){
+        url = url.substring(0, url.indexOf('?'));
+    }
+    
     if(url.endsWith('/')){
         url = url.substring(0, url.length - 1);
     }
     const path = rootPath + url;
+
+
 
     fs.lstat(path, (err, stat) => {
 
