@@ -92,6 +92,15 @@ a {
 	padding-right: 3px;
 }
 
+.file-table tr td.copy {
+	background: url(/images/copy.svg) no-repeat center center;
+	background-size: 26px;
+}
+
+.file-table tr td.copy.copied {
+	background-image: url(/images/copied.svg);
+}
+
 .file-table tr:hover td {
 	background-color: #f6f6f6;
 }

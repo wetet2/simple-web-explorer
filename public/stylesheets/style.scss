@@ -80,6 +80,14 @@ a{
             padding-right: 3px;
         }
 
+        &.copy{
+            background: url(/images/copy.svg) no-repeat center center;
+            background-size: 26px;
+            &.copied{
+                background-image: url(/images/copied.svg);
+            }
+        }
+
     }
 
     tr:hover{
