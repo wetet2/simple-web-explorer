@@ -26,6 +26,8 @@
             })
         }
 
+        var isMobile = $(window).width() >= 767 ? true : false;
+
         var isSafari = /Safari/.test(navigator.userAgent) && /Apple/.test(navigator.vendor);
         if(isSafari){
             setLastPage();
