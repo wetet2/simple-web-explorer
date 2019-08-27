@@ -104,7 +104,7 @@
 
                 <% for(var i=0; i < fileArr.length ; i++) { %>
                     <tr class="files">
-                        <td class="thumb">
+                        <td class="thumb" onclick="moveTo('<%= (path ==='/' ? '' : path) + "/" + fileArr[i].fileName %>', true)">
                             <% if(fileArr[i].isImage){ %>
                                 <div style="background-image: url('<%= (path ==='/' ? '' : path) + "/" + fileArr[i].fileName %>')"></div>
                             <% } else { %>

@@ -25,7 +25,7 @@ router.get('/*/', function(req, res, next) {
 
         if(err){
             console.log(err);
-            res.send(500);
+            res.sendStatus(500);
         }else{
 
             if(stat.isDirectory()){
@@ -99,7 +99,7 @@ function getFiles(path, arr){
     arr.forEach((e,i) => {
         let stat = fs.lstatSync(path + '/' + e);
         let isImage = false;
-        if(config.previewImage){
+        if(config.previewImage && stat.size <= 1048576){ // show thumb image smaller than 1MB
             let ext = e.split('.').pop().toLowerCase();
             isImage = (ext == 'svg' || ext == 'png' || ext == 'jpg' || ext == 'jpeg' || ext == 'gif');
         }
