@@ -85,7 +85,7 @@
             </colgroup>
             <tbody>
                 <tr class="folders">
-                    <td><img src="/images/folder.svg"></td>
+                    <td onclick="moveTo('<%= (prevPath === '' ? '/' : prevPath)  %>')"><img src="/images/folder.svg"></td>
                     <td class="folder-name prev-folder" onclick="moveTo('<%= (prevPath === '' ? '/' : prevPath)  %>')">..</td>
                     <td class="file-size"></td>
                     <td class="date"></td>
@@ -94,7 +94,7 @@
 
                 <% for(var i=0; i < folderArr.length ; i++) { %>
                     <tr class="folders">
-                        <td><img src="/images/folder.svg"></td>
+                        <td onclick="moveTo('<%= (path === '/' ? '' : path) + '/' + folderArr[i]  %>')"><img src="/images/folder.svg"></td>
                         <td class="folder-name" onclick="moveTo('<%= (path === '/' ? '' : path) + '/' + folderArr[i]  %>')"><%= folderArr[i] %></td>
                         <td class="file-size"></td>
                         <td class="date"></td>
