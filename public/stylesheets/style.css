@@ -154,6 +154,19 @@ a {
   font-size: 13px;
 }
 
+.file-table tr.files td.thumb {
+  padding: 5px 10px 5px 3px;
+}
+
+.file-table tr.files td.thumb > div {
+  width: 36px;
+  height: 36px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
 .file-table tr.files td.file-name {
   flex: 1;
   line-height: 16px;

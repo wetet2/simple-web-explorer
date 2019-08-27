@@ -104,8 +104,12 @@
 
                 <% for(var i=0; i < fileArr.length ; i++) { %>
                     <tr class="files">
-                        <td>
-                            <img src="/images/<%= fileArr[i].icon %>.svg">
+                        <td class="thumb">
+                            <% if(fileArr[i].isImage){ %>
+                                <div style="background-image: url('<%= (path ==='/' ? '' : path) + "/" + fileArr[i].fileName %>')"></div>
+                            <% } else { %>
+                                <img src="/images/<%= fileArr[i].icon %>.svg">
+                            <% } %>
                         </td>
                         <td class="file-name" onclick="moveTo('<%= (path ==='/' ? '' : path) + "/" + fileArr[i].fileName %>', true)">
                             <a href="<%= (path ==='/' ? '' : path) + '/' + fileArr[i].fileName %>">

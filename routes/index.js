@@ -13,7 +13,7 @@ router.get('/*/', function(req, res, next) {
     if(url.indexOf('?') >= 0){
         url = url.substring(0, url.indexOf('?'));
     }
-    
+
     if(url.endsWith('/')){
         url = url.substring(0, url.length - 1);
     }
@@ -53,7 +53,8 @@ router.get('/*/', function(req, res, next) {
                         folderArr,
                         fileArr,
                         path: url,
-                        prevPath: pathArr.join('/')
+                        prevPath: pathArr.join('/'),
+
                     });
 
                 });
@@ -97,7 +98,11 @@ function getFiles(path, arr){
     let fileArr = [];
     arr.forEach((e,i) => {
         let stat = fs.lstatSync(path + '/' + e);
-
+        let isImage = false;
+        if(config.previewImage){
+            let ext = e.split('.').pop().toLowerCase();
+            isImage = (ext == 'svg' || ext == 'png' || ext == 'jpg' || ext == 'jpeg' || ext == 'gif');
+        }
         if(stat.isFile()){
             fileArr.push({
                 fileName: e,
@@ -105,6 +110,7 @@ function getFiles(path, arr){
                 isRecentUpdated: isRecentUpdated(stat.mtime),
                 isRecentCreated: isRecentCreated(stat.birthtime),
                 icon: getIcon(e),
+                isImage: isImage,
                 size: getFileSize(stat.size)
             })
         }
