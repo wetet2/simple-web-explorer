@@ -7,14 +7,14 @@ var config = require('../config');
 const rootPath = config.root;
 
 /* GET home page. */
-router.get('/*/', function(req, res, next) {
+router.get('/*/', function (req, res, next) {
 
     let url = decodeURIComponent(req.url);
-    if(url.indexOf('?') >= 0){
+    if (url.indexOf('?') >= 0) {
         url = url.substring(0, url.indexOf('?'));
     }
 
-    if(url.endsWith('/')){
+    if (url.endsWith('/')) {
         url = url.substring(0, url.length - 1);
     }
     const path = rootPath + url;
@@ -23,17 +23,17 @@ router.get('/*/', function(req, res, next) {
 
     fs.lstat(path, (err, stat) => {
 
-        if(err){
+        if (err) {
             console.log(err);
             res.sendStatus(500);
-        }else{
+        } else {
 
-            if(stat.isDirectory()){
+            if (stat.isDirectory()) {
                 fs.readdir(path, (err, files) => {
-                    if(err){
+                    if (err) {
                         res.render('index', {
                             folderArr: [],
-                            fileArr : [],
+                            fileArr: [],
                             path: url,
                             prevPath: '',
                         });
@@ -59,10 +59,10 @@ router.get('/*/', function(req, res, next) {
 
                 });
             }
-            else if(stat.isFile()){
+            else if (stat.isFile()) {
                 // res.type('application/octet-stream');
                 res.sendFile(path);
-            }else{
+            } else {
                 res.statusMessage = 'Neither file nor directory';
                 res.send(500);
             }
@@ -74,36 +74,37 @@ router.get('/*/', function(req, res, next) {
 });
 
 var iconList =
-    ['avi','css','csv','doc','docx'
-    ,'html','jpg','js','json','mp3'
-    ,'mp4','pdf','png','ppt','pptx'
-    ,'psd','scss','txt','unknown','xls'
-    ,'xlsx','xml','zip','7z','alz'];
+    ['avi', 'css', 'csv', 'doc', 'docx'
+        , 'html', 'jpg', 'js', 'json', 'mp3'
+        , 'mp4', 'pdf', 'png', 'ppt', 'pptx'
+        , 'psd', 'scss', 'txt', 'unknown', 'xls'
+        , 'xlsx', 'xml', 'zip', '7z', 'alz'];
 
-function getIcon(name){
+function getIcon(name) {
     var ext = name.split('.')[name.split('.').length - 1];
-    if(iconList.indexOf(ext) > -1) return ext;
+    if (iconList.indexOf(ext) > -1) return ext;
     else return 'unknown';
 }
-function getFileSize(bytes){
-    if(bytes > 1048576){
+function getFileSize(bytes) {
+    if (bytes > 1048576) {
         return parseInt(bytes / 1048576) + ' MB';
-    }else if(bytes > 1024){
-        return parseInt(bytes/1024) + ' KB';
-    }else{
+    } else if (bytes > 1024) {
+        return parseInt(bytes / 1024) + ' KB';
+    } else {
         return '1 KB';
     }
 }
-function getFiles(path, arr){
+function getFiles(path, arr) {
     let fileArr = [];
-    arr.forEach((e,i) => {
+    arr.forEach((e, i) => {
+        if (e.indexOf(config.prefixForHidden) >= 0) return;
         let stat = fs.lstatSync(path + '/' + e);
         let isImage = false;
-        if(config.previewImage && stat.size <= 1048576){ // show thumb image smaller than 1MB
+        if (config.previewImage && stat.size <= 1048576) { // show thumb image smaller than 1MB
             let ext = e.split('.').pop().toLowerCase();
             isImage = (ext == 'svg' || ext == 'png' || ext == 'jpg' || ext == 'jpeg' || ext == 'gif');
         }
-        if(stat.isFile()){
+        if (stat.isFile()) {
             fileArr.push({
                 fileName: e,
                 mDate: moment(stat.mtime).format('YYYY-MM-DD HH:mm:ss'),
@@ -117,17 +118,19 @@ function getFiles(path, arr){
     })
     return fileArr;
 }
-function isRecentUpdated(date){
+function isRecentUpdated(date) {
     return moment(date).isSame(moment(new Date()), "day")
 }
-function isRecentCreated(date){
+function isRecentCreated(date) {
     return moment(date).isSameOrAfter(moment(new Date()), "day")
 }
 
-function getFolders(path, arr){
+function getFolders(path, arr) {
     let folderArr = [];
-    arr.forEach((e,i) => {
-        if(fs.lstatSync(path + '/' + e).isDirectory()){
+    arr.forEach((e, i) => {
+        console.log(e);
+        if (e.indexOf(config.prefixForHidden) >= 0) return;
+        if (fs.lstatSync(path + '/' + e).isDirectory()) {
             folderArr.push(e);
         }
     })
