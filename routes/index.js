@@ -128,13 +128,11 @@ function isRecentCreated(date) {
 function getFolders(path, arr) {
     let folderArr = [];
     arr.forEach((e, i) => {
-        console.log(e);
         if (e.indexOf(config.prefixForHidden) >= 0) return;
         if (fs.lstatSync(path + '/' + e).isDirectory()) {
             folderArr.push(e);
         }
     })
-
     return folderArr;
 }
 
