@@ -124,7 +124,6 @@ function isRecentUpdated(date) {
 function isRecentCreated(date) {
     return moment(date).isSameOrAfter(moment(new Date()), "day")
 }
-
 function getFolders(path, arr) {
     let folderArr = [];
     arr.forEach((e, i) => {
