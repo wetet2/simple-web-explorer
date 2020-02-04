@@ -6,7 +6,7 @@ var config = require('../config');
 
 const rootPath = config.root;
 
-/* GET home page. */
+
 router.get('/*/', function (req, res, next) {
 
     let url = decodeURIComponent(req.url);

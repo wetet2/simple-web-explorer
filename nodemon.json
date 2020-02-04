@@ -1,0 +1,10 @@
+{
+  "watch": [
+    "public/",
+    "routes/",
+    "views"
+  ],
+  "ignore": [
+    "node_modules"
+  ]
+}

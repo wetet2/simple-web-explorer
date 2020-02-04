@@ -1,5 +1,5 @@
 var config = {
-    port: 10280,
+    port: 10380,
     root: 'd://publish/output',
     previewImage: true,
     prefixForHidden: '_h_',
