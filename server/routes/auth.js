@@ -12,8 +12,9 @@ router.post('/login', function (req, res, next) {
         res.json({result: false})
     }
 });
-router.post('/logout', function (req, res, next) {
+router.get('/logout', function (req, res, next) {
     sessionManager.remove(req.session.id);
+    res.redirect('/');
 });
 
 module.exports = router;
