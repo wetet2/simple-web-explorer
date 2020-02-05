@@ -1,9 +1,10 @@
 {
-  "name": "node-file-list",
-  "version": "0.1.0",
+  "name": "simple-web-explorer",
+  "version": "1.0",
   "private": true,
   "scripts": {
-    "start": "node ./node_modules/nodemon/bin/nodemon server.js"
+    "start:dev": "node ./node_modules/nodemon/bin/nodemon server.js -w server/ -w server.js --ignore node_modules/*",
+    "start": "node server"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
@@ -13,8 +14,7 @@
     "express": "~4.16.0",
     "express-session": "^1.17.0",
     "http-errors": "~1.6.2",
-    "moment": "^2.22.1",
-    "morgan": "^1.9.1"
+    "moment": "^2.22.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"

@@ -6,7 +6,6 @@ var config = require('../config');
 
 const rootPath = config.root;
 
-
 router.get('/*/', function (req, res, next) {
 
     let url = decodeURIComponent(req.url);
@@ -18,8 +17,6 @@ router.get('/*/', function (req, res, next) {
         url = url.substring(0, url.length - 1);
     }
     const path = rootPath + url;
-
-
 
     fs.lstat(path, (err, stat) => {
 

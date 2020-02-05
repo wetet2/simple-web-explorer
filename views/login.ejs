@@ -6,11 +6,41 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title></title>
+    <title>Login</title>
+    <link rel='stylesheet' href='/css/style.css' />
+    <script>
+        function tryLogin(a) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/__auth/login', true);
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.onload = function () {
+                let res = JSON.parse(this.responseText);
+                if(res.result){
+                    location.href = '/';
+                }else{
+                    alert('Wrong Password !!');
+                }
+            };
+            xhr.send(JSON.stringify({pw:a}));
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            let inputPass = document.querySelector('input[type="password"]');
+            inputPass.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    tryLogin(inputPass.value)
+                    inputPass.select();
+                }
+            })
+        })
+    </script>
 </head>
 
 <body>
-    Login
+    <div class="p-login">
+        <div class="box">
+            <input type="password" placeholder="password"><br>
+        </div>
+    </div>
 </body>
 
 </html>

@@ -1,30 +1,13 @@
-var app = require('./app');
-var debug = require('debug')('node-file-list:server');
+var app = require('./server/app');
 var http = require('http');
-var config = require('./config');
-
-var port = normalizePort(process.env.PORT || config.port);
+var config = require('./server/config');
+var port = process.env.PORT || config.port;
+var a = 0;
 app.set('port', port);
 var server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
-
-function normalizePort(val) {
-    var port = parseInt(val, 10);
-
-    if (isNaN(port)) {
-        // named pipe
-        return val;
-    }
-
-    if (port >= 0) {
-        // port number
-        return port;
-    }
-
-    return false;
-}
 
 function onError(error) {
     if (error.syscall !== 'listen') {
@@ -52,8 +35,7 @@ function onError(error) {
 
 function onListening() {
     var addr = server.address();
-    var bind = typeof addr === 'string' ?
-        'pipe ' + addr :
-        'port ' + addr.port;
+    var bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
     console.log('Listening on ' + bind);
 }
+

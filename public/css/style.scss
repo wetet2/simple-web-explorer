@@ -239,3 +239,22 @@ $td-height: 40px;
 
 
 }
+
+.p-login{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(to right, #689fd7, #8cd2da 25%, #56bd97 50%, #51c586);
+
+    .box input{
+        width: 200px;
+        height: 30px;
+        border:0;
+        background-color: #fff;
+        box-shadow: 0 3px 6px rgba(0,0,0,.15);
+        text-align: center;;
+    }
+}
