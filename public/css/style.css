@@ -72,6 +72,14 @@ a { text-decoration: none; color: #000; font-weight: 400; }
 
 .refresh { display: none; }
 
+.p-login { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center; width: 100vw; height: 100vh; background: -webkit-gradient(linear, left top, right top, from(#689fd7), color-stop(25%, #8cd2da), color-stop(50%, #56bd97), to(#51c586)); background: linear-gradient(to right, #689fd7, #8cd2da 25%, #56bd97 50%, #51c586); }
+
+.p-login .box input { width: 200px; height: 30px; border: 0; background-color: #fff; -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15); text-align: center; }
+
+.sort-area { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-box-pack: end; -ms-flex-pack: end; justify-content: flex-end; }
+
+.sort-area select { border: 1px solid #cecece; height: 24px; font-size: 14px; }
+
 @media (max-width: 767px) { .publish-title { min-height: 72px; -ms-flex-wrap: wrap; flex-wrap: wrap; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; padding: 15px 45px 15px 10px; }
   .publish-title label { display: block; width: 100%; }
   .publish-title .path { display: block; width: 100%; margin-left: 0; }
@@ -81,8 +89,5 @@ a { text-decoration: none; color: #000; font-weight: 400; }
   .publish tr td:nth-child(2) img { width: 12px; height: 12px; }
   .file-table td.date, .file-table td.file-size { display: none; }
   .file-table tr td { font-size: 12px !important; }
-  .file-table tr td:first-child img { width: 30px; height: 30px; } }
-
-.p-login { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center; width: 100vw; height: 100vh; background: -webkit-gradient(linear, left top, right top, from(#689fd7), color-stop(25%, #8cd2da), color-stop(50%, #56bd97), to(#51c586)); background: linear-gradient(to right, #689fd7, #8cd2da 25%, #56bd97 50%, #51c586); }
-
-.p-login .box input { width: 200px; height: 30px; border: 0; background-color: #fff; -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15); text-align: center; }
+  .file-table tr td:first-child img { width: 30px; height: 30px; }
+  .sort-area { padding: 8px 0; } }

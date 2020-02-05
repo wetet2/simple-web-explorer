@@ -1,9 +1,9 @@
 var config = {
-    port: 10380,
+    port: 10280,
     root: 'd://publish/output',
     previewImage: true,
     prefixForHidden: '_h_',
-    needLogin: true,
+    needLogin: false,
     loginPassList: ['a','1'],
     sessionExpireMinutes: 1,
 }

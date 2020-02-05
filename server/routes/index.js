@@ -7,7 +7,6 @@ var config = require('../config');
 const rootPath = config.root;
 
 router.get('/*/', function (req, res, next) {
-
     let url = decodeURIComponent(req.url);
     if (url.indexOf('?') >= 0) {
         url = url.substring(0, url.indexOf('?'));
@@ -37,8 +36,8 @@ router.get('/*/', function (req, res, next) {
                         return;
                     }
 
-                    var fileArr = getFiles(path, files);
-                    var folderArr = getFolders(path, files);
+                    var fileArr = getFiles(path, files, req.query.sort);
+                    var folderArr = getFolders(path, files, req.query.sort);
 
                     var pathArr = url.split('/');
                     var pathCount = pathArr.length;
@@ -91,7 +90,7 @@ function getFileSize(bytes) {
         return '1 KB';
     }
 }
-function getFiles(path, arr) {
+function getFiles(path, arr, sort) {
     let fileArr = [];
     arr.forEach((e, i) => {
         if (e.indexOf(config.prefixForHidden) >= 0) return;
@@ -113,7 +112,7 @@ function getFiles(path, arr) {
             })
         }
     })
-    return fileArr;
+    return sortList(fileArr, sort || 1);
 }
 function isRecentUpdated(date) {
     return moment(date).isSame(moment(new Date()), "day")
@@ -121,15 +120,53 @@ function isRecentUpdated(date) {
 function isRecentCreated(date) {
     return moment(date).isSameOrAfter(moment(new Date()), "day")
 }
-function getFolders(path, arr) {
+function getFolders(path, arr, sort) {
     let folderArr = [];
     arr.forEach((e, i) => {
         if (e.indexOf(config.prefixForHidden) >= 0) return;
-        if (fs.lstatSync(path + '/' + e).isDirectory()) {
-            folderArr.push(e);
+        let stat = fs.lstatSync(path + '/' + e);
+        if (stat.isDirectory()) {
+            folderArr.push({
+                fileName: e,
+                mDate: moment(stat.mtime).format('YYYY-MM-DD HH:mm:ss')
+            });
         }
     })
-    return folderArr;
+    return sortList(folderArr, sort || 1);
+}
+function sortList(arr, sortType) {
+    switch (parseInt(sortType)) {
+        case 1: // name desc
+            return arr.sort((val2, val1) => {
+                if (val2.fileName.toLowerCase() < val1.fileName.toLowerCase()) return -1;
+                else if (val2.fileName.toLowerCase() > val1.fileName.toLowerCase()) return 1;
+                else return 0;
+            })
+        case 2: // name asc
+            return arr.sort((val1, val2) => {
+                if (val2.fileName.toLowerCase() < val1.fileName.toLowerCase()) return -1;
+                else if (val2.fileName.toLowerCase() > val1.fileName.toLowerCase()) return 1;
+                else return 0;
+            })
+        case 3: // date desc
+            return arr.sort((val2, val1) => {
+                if (val2.mDate < val1.mDate) return -1;
+                else if (val2.mDate > val1.mDate) return 1;
+                else return 0;
+            })
+        case 4: // date asc
+            return arr.sort((val1, val2) => {
+                if (val2.mDate < val1.mDate) return -1;
+                else if (val2.mDate > val1.mDate) return 1;
+                else return 0;
+            })
+        default:
+            return arr;
+
+    }
+    
+
+    return
 }
 
 module.exports = router;

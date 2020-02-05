@@ -1,35 +1,53 @@
 //@import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
-*{margin:0;padding:0;box-sizing: border-box;}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-$font-nanum: 'Nanum Gothic', sans-serif;
+$font-nanum: 'Nanum Gothic',
+sans-serif;
 
-html,body{
+html,
+body {
     font-family: $font-nanum;
 }
-table{
+
+table {
     width: 100%;
     border-collapse: collapse;
 }
-a{
+
+a {
     text-decoration: none;
     color: #000;
     font-weight: 400;
 }
-.t-center{text-align: center !important}
-.t-right{text-align: right !important}
-.hide{display: none;}
 
-.publish-title{
+.t-center {
+    text-align: center !important
+}
+
+.t-right {
+    text-align: right !important
+}
+
+.hide {
+    display: none;
+}
+
+.publish-title {
     display: flex;
     align-items: center;
     justify-content: center;
 
-    > label{
+    >label {
         font-size: 17px;
         font-weight: bold;
         font-family: sans-serif;
         color: #666;
     }
+
     border-bottom: 1px solid #ddd;
     padding: 10px 10px;
     box-shadow: 0px 0px 10px -2px #cecece;
@@ -40,7 +58,7 @@ a{
     width: 100%;
     background-color: #fff;
 
-    > span{
+    >span {
         font-size: 14px;
         font-weight: 400;
         color: #555;
@@ -48,7 +66,8 @@ a{
         margin-left: 10px;
     }
 }
-.publish{
+
+.publish {
     width: 800px;
     padding: 10px 20px 50px 20px;
 
@@ -59,16 +78,20 @@ a{
 
 
 $td-height: 40px;
-.file-table{
+
+.file-table {
     display: block;
-    tbody{
+
+    tbody {
         display: block;
     }
+
     tr {
         display: flex;
         min-height: $td-height;
     }
-    tr td{
+
+    tr td {
         display: flex;
         align-items: center;
         min-height: $td-height;
@@ -76,50 +99,57 @@ $td-height: 40px;
         font-size: 14px;
         border-bottom: 1px solid #eee;
 
-        &:first-child{
+        &:first-child {
             padding-left: 3px;
             text-align: left;
-            img{
+
+            img {
                 width: 24px;
                 height: 24px;
             }
         }
-        &:nth-child(2){
-            img{
+
+        &:nth-child(2) {
+            img {
                 width: 12px;
                 height: 12px;
             }
         }
-        &:last-child{
+
+        &:last-child {
             padding-right: 3px;
         }
 
-        &.copy{
+        &.copy {
             width: 30px;
             background: url(/images/copy.svg) no-repeat center center;
             background-size: 20px;
-            &.copied{
+
+            &.copied {
                 background-image: url(/images/copied.svg);
             }
         }
 
     }
 
-    tr:hover{
-        td{
+    tr:hover {
+        td {
             background-color: #f6f6f6;
         }
     }
 
-    tr.folders{
+    tr.folders {
         cursor: pointer;
-        td:first-child{
+
+        td:first-child {
             text-align: center;
-            img{
+
+            img {
                 vertical-align: -3px;
             }
         }
-        td.folder-name{
+
+        td.folder-name {
             flex: 1;
             font-size: 14px;
             font-weight: bold;
@@ -127,45 +157,53 @@ $td-height: 40px;
             padding-left: 0;
         }
 
-        &.prev-folder{
+        &.prev-folder {
             letter-spacing: 2px;
         }
     }
 
-    tr.files{
+    tr.files {
         cursor: pointer;
-        td{
+
+        td {
             font-size: 13px;
 
         }
-        td.thumb{
+
+        td.thumb {
             padding: 5px 10px 5px 3px;
-            > div{
+
+            >div {
                 width: 36px;
                 height: 36px;
                 background-repeat: no-repeat;
                 background-position: center center;
                 background-size: contain;
-                background-color: rgba(0,0,0,.03);
+                background-color: rgba(0, 0, 0, .03);
             }
         }
-        td.file-name{
+
+        td.file-name {
             flex: 1;
             line-height: 16px;
             padding-left: 0;
             word-break: break-all;
-            img{
+
+            img {
                 vertical-align: -1px;
             }
         }
-        td.file-name.last-page a{
+
+        td.file-name.last-page a {
             color: #006ff1;
         }
-        td.file-size{
+
+        td.file-size {
             text-align: right;
             font-size: 12px;
         }
-        td.date{
+
+        td.date {
             font-size: 12px;
             text-align: right;
         }
@@ -173,74 +211,12 @@ $td-height: 40px;
 
 }
 
-.refresh{
+.refresh {
     display: none;
 }
 
-@media (max-width: 767px){
-    .publish-title{
-        min-height: 72px;
-        flex-wrap: wrap;;
-        justify-content: space-between;
-        padding: 15px 45px 15px 10px;
 
-        label{
-            display: block;
-            width: 100%;
-        }
-        .path{
-            display: block;
-            width: 100%;
-            margin-left: 0;
-        }
-        .refresh{
-            position: absolute;
-            top: 24px;
-            right: 20px;
-            display: inline;
-        }
-    }
-    .publish{
-        width: 100%;
-        padding: 10px 5px 50px 5px;
-        margin-top: 65px;
-        tr td{
-
-            &:first-child{
-                img{
-                    width: 20px;
-                    height: 20px;
-                }
-            }
-            &:nth-child(2){
-                img{
-                    width: 12px;
-                    height: 12px;
-                }
-            }
-        }
-    }
-
-    .file-table{
-        td.date,
-        td.file-size{
-            display: none;
-        }
-        tr td{
-            font-size: 12px !important;
-            &:first-child{
-                img{
-                    width: 30px;
-                    height: 30px;
-                }
-            }
-        }
-    }
-
-
-}
-
-.p-login{
+.p-login {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -249,12 +225,103 @@ $td-height: 40px;
     height: 100vh;
     background: linear-gradient(to right, #689fd7, #8cd2da 25%, #56bd97 50%, #51c586);
 
-    .box input{
+    .box input {
         width: 200px;
         height: 30px;
-        border:0;
+        border: 0;
         background-color: #fff;
-        box-shadow: 0 3px 6px rgba(0,0,0,.15);
-        text-align: center;;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, .15);
+        text-align: center;
+        ;
     }
+}
+
+
+.sort-area {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    select {
+        border: 1px solid #cecece;
+        height: 24px;
+        font-size: 14px;
+    }
+}
+
+
+@media (max-width: 767px) {
+   
+    .publish-title {
+        min-height: 72px;
+        flex-wrap: wrap;
+        ;
+        justify-content: space-between;
+        padding: 15px 45px 15px 10px;
+
+        label {
+            display: block;
+            width: 100%;
+        }
+
+        .path {
+            display: block;
+            width: 100%;
+            margin-left: 0;
+        }
+
+        .refresh {
+            position: absolute;
+            top: 24px;
+            right: 20px;
+            display: inline;
+        }
+    }
+
+    .publish {
+        width: 100%;
+        padding: 10px 5px 50px 5px;
+        margin-top: 65px;
+
+        tr td {
+
+            &:first-child {
+                img {
+                    width: 20px;
+                    height: 20px;
+                }
+            }
+
+            &:nth-child(2) {
+                img {
+                    width: 12px;
+                    height: 12px;
+                }
+            }
+        }
+    }
+
+    .file-table {
+
+        td.date,
+        td.file-size {
+            display: none;
+        }
+
+        tr td {
+            font-size: 12px !important;
+
+            &:first-child {
+                img {
+                    width: 30px;
+                    height: 30px;
+                }
+            }
+        }
+    }
+
+    .sort-area{
+        padding: 8px 0;
+    }
+
 }

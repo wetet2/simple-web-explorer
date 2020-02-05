@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>Publish</title>
@@ -15,11 +16,12 @@
 
     <script type="text/javascript">
         var cookieName = 'lastPage';
-        function setLastPage(){
-            var lastPage =  decodeURIComponent(Cookies.get(cookieName));
+
+        function setLastPage() {
+            var lastPage = decodeURIComponent(Cookies.get(cookieName));
             $('.file-name a').closest('td').removeClass('last-page');
-            $('.file-name a').each(function(i ,e){
-                if($(e).attr('href') === lastPage){
+            $('.file-name a').each(function (i, e) {
+                if ($(e).attr('href') === lastPage) {
                     $(e).closest('td').addClass('last-page');
                     return false;
                 }
@@ -29,27 +31,34 @@
         var isMobile = $(window).width() >= 767 ? true : false;
 
         var isSafari = /Safari/.test(navigator.userAgent) && /Apple/.test(navigator.vendor);
-        if(isSafari){
+        if (isSafari) {
             setLastPage();
-            setInterval(function(){
+            setInterval(function () {
                 setLastPage();
             }, 300)
         }
 
-        $(document).ready(function(){
+        $(document).ready(function () {
             setLastPage();
-            $('.refresh').click(function(){
+            $('.refresh').click(function () {
                 window.location.reload();
+            })
+
+            let url = new URL(location.href);
+            $('#cboSort').val(url.searchParams.get('sort') || 1);
+            $('#cboSort').change(function () {
+                url.searchParams.set('sort', this.value);
+                location.href = url.toString();
             })
         })
 
-        function moveTo(path, isFile){
-            if(isFile) Cookies.set(cookieName, encodeURIComponent(path));
+        function moveTo(path, isFile) {
+            if (isFile) Cookies.set(cookieName, encodeURIComponent(path));
             window.location.href = path;
         }
 
 
-        function copyToClip(path, ele){
+        function copyToClip(path, ele) {
             var fullPath = window.location.origin + path;
             var t = document.createElement("input");
             t.style.opacity = 0;
@@ -75,6 +84,16 @@
     </div>
 
     <div class="publish">
+        <div class="sort-area">
+            <select name="" id="cboSort">
+                <option value="1">Name DESC</option>
+                <option value="2">Name ASC</option>
+                <option value="3">Date DESC</option>
+                <option value="4">Date ASC</option>
+            </select>
+
+        </div>
+
         <table class="file-table">
             <colgroup>
                 <col style="width:30px;" />
@@ -85,43 +104,55 @@
             </colgroup>
             <tbody>
                 <tr class="folders">
-                    <td onclick="moveTo('<%= (prevPath === '' ? '/' : prevPath)  %>')"><img src="/images/folder.svg"></td>
-                    <td class="folder-name prev-folder" onclick="moveTo('<%= (prevPath === '' ? '/' : prevPath)  %>')">..</td>
+                    <td onclick="moveTo('<%= (prevPath === '' ? '/' : prevPath)  %>')"><img src="/images/folder.svg">
+                    </td>
+                    <td class="folder-name prev-folder" onclick="moveTo('<%= (prevPath === '' ? '/' : prevPath)  %>')">
+                        ..</td>
                     <td class="file-size"></td>
                     <td class="date"></td>
                     <td></td>
                 </tr>
 
                 <% for(var i=0; i < folderArr.length ; i++) { %>
-                    <tr class="folders">
-                        <td onclick="moveTo('<%= (path === '/' ? '' : path) + '/' + folderArr[i]  %>')"><img src="/images/folder.svg"></td>
-                        <td class="folder-name" onclick="moveTo('<%= (path === '/' ? '' : path) + '/' + folderArr[i]  %>')"><%= folderArr[i] %></td>
-                        <td class="file-size"></td>
-                        <td class="date"></td>
-                        <td class="copy" title="copy to clipboard" onclick="copyToClip('<%= (path === '/' ? '' : path) + '/' + folderArr[i] +'/'  %>', this)"></td>
-                    </tr>
+                <tr class="folders">
+                    <td onclick="moveTo('<%= (path === '/' ? '' : path) + '/' + folderArr[i].fileName  %>')"><img
+                            src="/images/folder.svg"></td>
+                    <td class="folder-name" onclick="moveTo('<%= (path === '/' ? '' : path) + '/' + folderArr[i].fileName  %>')">
+                        <%= folderArr[i].fileName %></td>
+                    <td class="file-size"></td>
+                    <td class="date"></td>
+                    <td class="copy" title="copy to clipboard"
+                        onclick="copyToClip('<%= (path === '/' ? '' : path) + '/' + folderArr[i].fileName +'/'  %>', this)"></td>
+                </tr>
                 <% } %>
 
                 <% for(var i=0; i < fileArr.length ; i++) { %>
-                    <tr class="files">
-                        <td class="thumb" onclick="moveTo('<%= (path ==='/' ? '' : path) + "/" + fileArr[i].fileName %>', true)">
-                            <% if(fileArr[i].isImage){ %>
-                                <div style="background-image: url('<%= (path ==='/' ? '' : path) + "/" + fileArr[i].fileName %>')"></div>
-                            <% } else { %>
-                                <img src="/images/<%= fileArr[i].icon %>.svg">
-                            <% } %>
-                        </td>
-                        <td class="file-name" onclick="moveTo('<%= (path ==='/' ? '' : path) + "/" + fileArr[i].fileName %>', true)">
-                            <a href="<%= (path ==='/' ? '' : path) + '/' + fileArr[i].fileName %>">
-                                <%= fileArr[i].fileName %>
-                                <img src="/images/new.svg" width="12px" class="<%= fileArr[i].isRecentCreated ? '' : 'hide' %>">
-                                <img src="/images/updated.svg" width="12px" class="<%= fileArr[i].isRecentUpdated ? '' : 'hide' %>">
-                            </a>
-                        </td>
-                        <td class="file-size"><%= fileArr[i].size %></td>
-                        <td class="date"><%= fileArr[i].mDate %></td>
-                        <td class="copy" title="copy to clipboard" onclick="copyToClip('<%= (path ==='/' ? '' : path) + "/" + fileArr[i].fileName %>', this)"></td>
-                    </tr>
+                <tr class="files">
+                    <td class="thumb"
+                        onclick="moveTo('<%= (path ==='/' ? '' : path) + "/" + fileArr[i].fileName %>', true)">
+                        <% if(fileArr[i].isImage){ %>
+                        <div
+                            style="background-image: url('<%= (path ==='/' ? '' : path) + "/" + fileArr[i].fileName %>')">
+                        </div>
+                        <% } else { %>
+                        <img src="/images/<%= fileArr[i].icon %>.svg">
+                        <% } %>
+                    </td>
+                    <td class="file-name"
+                        onclick="moveTo('<%= (path ==='/' ? '' : path) + "/" + fileArr[i].fileName %>', true)">
+                        <a href="<%= (path ==='/' ? '' : path) + '/' + fileArr[i].fileName %>">
+                            <%= fileArr[i].fileName %>
+                            <img src="/images/new.svg" width="12px"
+                                class="<%= fileArr[i].isRecentCreated ? '' : 'hide' %>">
+                            <img src="/images/updated.svg" width="12px"
+                                class="<%= fileArr[i].isRecentUpdated ? '' : 'hide' %>">
+                        </a>
+                    </td>
+                    <td class="file-size"><%= fileArr[i].size %></td>
+                    <td class="date"><%= fileArr[i].mDate %></td>
+                    <td class="copy" title="copy to clipboard"
+                        onclick="copyToClip('<%= (path ==='/' ? '' : path) + "/" + fileArr[i].fileName %>', this)"></td>
+                </tr>
                 <% } %>
 
             </tbody>
