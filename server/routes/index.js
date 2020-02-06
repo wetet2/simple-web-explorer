@@ -112,7 +112,7 @@ function getFiles(path, arr, sort) {
             })
         }
     })
-    return sortList(fileArr, sort || 1);
+    return sortList(fileArr, sort);
 }
 function isRecentUpdated(date) {
     return moment(date).isSame(moment(new Date()), "day")
@@ -132,7 +132,7 @@ function getFolders(path, arr, sort) {
             });
         }
     })
-    return sortList(folderArr, sort || 1);
+    return sortList(folderArr, sort);
 }
 function sortList(arr, sortType) {
     switch (parseInt(sortType)) {
@@ -164,9 +164,6 @@ function sortList(arr, sortType) {
             return arr;
 
     }
-    
-
-    return
 }
 
 module.exports = router;

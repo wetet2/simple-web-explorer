@@ -17,6 +17,36 @@
     <script type="text/javascript">
         var cookieName = 'lastPage';
 
+        var isMobile = $(window).width() >= 767 ? true : false;
+
+        var isSafari = /Safari/.test(navigator.userAgent) && /Apple/.test(navigator.vendor);
+        if (isSafari) {
+            setLastPage();
+            setInterval(function () {
+                setLastPage();
+            }, 300)
+        }
+
+        let url = new URL(location.href);
+        $(document).ready(function () {
+            setLastPage();
+            $('.refresh').click(function () {
+                window.location.reload();
+            })
+
+            $('#cboSort').val(url.searchParams.get('sort') || 1);
+            $('#cboSort').change(function () {
+                url.searchParams.set('sort', this.value);
+                moveTo(url.toString());
+                // location.href = url.toString();
+            })
+            
+            $('#txtSearch').val(decodeURIComponent(Cookies.get('filter') || ''));
+            $('#txtSearch').on('keyup', listFileter);
+            txtSearch.dispatchEvent(new Event('keyup'));
+            $('.publish').show();
+        })
+
         function setLastPage() {
             var lastPage = decodeURIComponent(Cookies.get(cookieName));
             $('.file-name a').closest('td').removeClass('last-page');
@@ -28,32 +58,9 @@
             })
         }
 
-        var isMobile = $(window).width() >= 767 ? true : false;
-
-        var isSafari = /Safari/.test(navigator.userAgent) && /Apple/.test(navigator.vendor);
-        if (isSafari) {
-            setLastPage();
-            setInterval(function () {
-                setLastPage();
-            }, 300)
-        }
-
-        $(document).ready(function () {
-            setLastPage();
-            $('.refresh').click(function () {
-                window.location.reload();
-            })
-
-            let url = new URL(location.href);
-            $('#cboSort').val(url.searchParams.get('sort') || 1);
-            $('#cboSort').change(function () {
-                url.searchParams.set('sort', this.value);
-                location.href = url.toString();
-            })
-        })
-
         function moveTo(path, isFile) {
             if (isFile) Cookies.set(cookieName, encodeURIComponent(path));
+            Cookies.set('filter', encodeURIComponent($('#txtSearch').val()))
             window.location.href = path;
         }
 
@@ -69,31 +76,50 @@
             document.body.removeChild(t);
 
             $(ele).addClass('copied')
-
-            // prompt('Press Ctrl+C',window.location.origin + path)
         }
+
+        function listFileter(e){
+            $('.file-table tr').each(function(i,item){
+                if($(item).find('.file-name').text().toLowerCase().trim().indexOf(e.target.value.toLowerCase()) < 0){
+                    $(item).hide();
+                }else{
+                    $(item).show();
+                }
+            })
+        }
+        function clearFilter(){
+            var txtSearch = document.querySelector('#txtSearch');
+            txtSearch.value = '';
+            Cookies.set('filter', '');
+            txtSearch.dispatchEvent(new Event('keyup'));
+        }
+
     </script>
 </head>
 
 <body>
 
-    <div class="publish-title">
-        <label><a href="/"><b>Publish List</b></a></label>
+    <div class="top-title">
+        <label><a href="/">File List</b></a></label>
         <span class="path"><%= path !== '' ? '( '+path+' )' : '' %></span>
         <img class="refresh" src="/images/refresh.svg" width="18px">
     </div>
-
-    <div class="publish">
-        <div class="sort-area">
+    <div class="condition-area">
+        <div class="wrap">
+            <div class="search-filter">
+                <input type="text" id="txtSearch" placeholder="Search Text">
+                <button onclick="clearFilter();"></button>
+            </div>
             <select name="" id="cboSort">
-                <option value="1">Name DESC</option>
-                <option value="2">Name ASC</option>
-                <option value="3">Date DESC</option>
-                <option value="4">Date ASC</option>
+                <option value="1">이름 내림차순</option>
+                <option value="2">이름 오름차순</option>
+                <option value="3">날짜 내림차순</option>
+                <option value="4">날짜 오름차순</option>
             </select>
-
         </div>
+    </div>
 
+    <div class="publish" style="display:none;">
         <table class="file-table">
             <colgroup>
                 <col style="width:30px;" />
@@ -103,11 +129,9 @@
                 <col style="width:30px;" />
             </colgroup>
             <tbody>
-                <tr class="folders">
-                    <td onclick="moveTo('<%= (prevPath === '' ? '/' : prevPath)  %>')"><img src="/images/folder.svg">
-                    </td>
-                    <td class="folder-name prev-folder" onclick="moveTo('<%= (prevPath === '' ? '/' : prevPath)  %>')">
-                        ..</td>
+                <tr class="folders prev-folder">
+                    <td onclick="moveTo('<%= (prevPath === '' ? '/' : prevPath)  %>')"><img src="/images/folder.svg"> </td>
+                    <td class="file-name prev-folder" onclick="moveTo('<%= (prevPath === '' ? '/' : prevPath)  %>')">..</td>
                     <td class="file-size"></td>
                     <td class="date"></td>
                     <td></td>
@@ -115,21 +139,17 @@
 
                 <% for(var i=0; i < folderArr.length ; i++) { %>
                 <tr class="folders">
-                    <td onclick="moveTo('<%= (path === '/' ? '' : path) + '/' + folderArr[i].fileName  %>')"><img
-                            src="/images/folder.svg"></td>
-                    <td class="folder-name" onclick="moveTo('<%= (path === '/' ? '' : path) + '/' + folderArr[i].fileName  %>')">
-                        <%= folderArr[i].fileName %></td>
+                    <td onclick="moveTo('<%= (path === '/' ? '' : path) + '/' + folderArr[i].fileName  %>')"><img src="/images/folder.svg"></td>
+                    <td class="file-name" onclick="moveTo('<%= (path === '/' ? '' : path) + '/' + folderArr[i].fileName  %>')"> <%= folderArr[i].fileName %></td>
                     <td class="file-size"></td>
-                    <td class="date"></td>
-                    <td class="copy" title="copy to clipboard"
-                        onclick="copyToClip('<%= (path === '/' ? '' : path) + '/' + folderArr[i].fileName +'/'  %>', this)"></td>
+                    <td class="date"><%= folderArr[i].mDate %></td>
+                    <td class="copy" title="copy to clipboard" onclick="copyToClip('<%= (path === '/' ? '' : path) + '/' + folderArr[i].fileName +'/'  %>', this)"></td>
                 </tr>
                 <% } %>
 
                 <% for(var i=0; i < fileArr.length ; i++) { %>
                 <tr class="files">
-                    <td class="thumb"
-                        onclick="moveTo('<%= (path ==='/' ? '' : path) + "/" + fileArr[i].fileName %>', true)">
+                    <td class="thumb" onclick="moveTo('<%= (path ==='/' ? '' : path) + "/" + fileArr[i].fileName %>', true)">
                         <% if(fileArr[i].isImage){ %>
                         <div
                             style="background-image: url('<%= (path ==='/' ? '' : path) + "/" + fileArr[i].fileName %>')">
@@ -138,8 +158,7 @@
                         <img src="/images/<%= fileArr[i].icon %>.svg">
                         <% } %>
                     </td>
-                    <td class="file-name"
-                        onclick="moveTo('<%= (path ==='/' ? '' : path) + "/" + fileArr[i].fileName %>', true)">
+                    <td class="file-name" onclick="moveTo('<%= (path ==='/' ? '' : path) + "/" + fileArr[i].fileName %>', true)">
                         <a href="<%= (path ==='/' ? '' : path) + '/' + fileArr[i].fileName %>">
                             <%= fileArr[i].fileName %>
                             <img src="/images/new.svg" width="12px"
