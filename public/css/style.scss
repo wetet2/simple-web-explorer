@@ -1,6 +1,32 @@
 // @import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
 // @import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,500,700&display=swap');
-@import url(https://cdn.jsdelivr.net/gh/theeluwin/NotoSansKR-Hestia@master/stylesheets/NotoSansKR-Hestia.css);
+@font-face {
+    font-family: 'Noto Sans Korean';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Noto Sans Regular'), local('NotoSans-Regular'),
+    url(https://cdn.jsdelivr.net/gh/theeluwin/NotoSansKR-Hestia@master/fonts/woff/NotoSansKR-Regular-Hestia.woff) format('woff'),
+    url(https://cdn.jsdelivr.net/gh/theeluwin/NotoSansKR-Hestia@master/fonts/otf/NotoSansKR-Regular-Hestia.otf) format('opentype');
+}
+
+@font-face {
+    font-family: 'Noto Sans Korean';
+    font-style: normal;
+    font-weight: 500;
+    src: local('Noto Sans Medium'), local('NotoSans-Medium'),
+    url(https://cdn.jsdelivr.net/gh/theeluwin/NotoSansKR-Hestia@master/fonts/woff/NotoSansKR-Medium-Hestia.woff) format('woff'),
+    url(https://cdn.jsdelivr.net/gh/theeluwin/NotoSansKR-Hestia@master/fonts/otf/NotoSansKR-Medium-Hestia.otf) format('opentype');
+}
+
+@font-face {
+    font-family: 'Noto Sans Korean';
+    font-style: normal;
+    font-weight: 700;
+    src: local('Noto Sans Bold'), local('NotoSans-Bold'),
+    url(https://cdn.jsdelivr.net/gh/theeluwin/NotoSansKR-Hestia@master/fonts/woff/NotoSansKR-Bold-Hestia.woff) format('woff'),
+    url(https://cdn.jsdelivr.net/gh/theeluwin/NotoSansKR-Hestia@master/fonts/otf/NotoSansKR-Bold-Hestia.otf) format('opentype');
+}
+
 
 * {
     margin: 0;

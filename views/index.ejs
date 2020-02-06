@@ -13,6 +13,7 @@
     <link rel='stylesheet' href='/css/style.css' />
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="/js/js.cookie.js"></script>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
 
     <script type="text/javascript">
         var cookieName = 'lastPage';
@@ -27,7 +28,7 @@
             }, 300)
         }
 
-        let url = new URL(location.href);
+        var url = new URL(location.href);
         $(document).ready(function () {
             setLastPage();
             $('.refresh').click(function () {
@@ -38,12 +39,17 @@
             $('#cboSort').change(function () {
                 url.searchParams.set('sort', this.value);
                 moveTo(url.toString());
-                // location.href = url.toString();
             })
             
-            $('#txtSearch').val(decodeURIComponent(Cookies.get('filter') || ''));
-            $('#txtSearch').on('blur', function(){
-            })
+            var urlFilter = url.searchParams.get('filter');
+            if(urlFilter){
+                Cookies.set('filter', encodeURIComponent(urlFilter))
+                $('#txtSearch').val(urlFilter);
+                url.searchParams.delete('filter');
+                window.history.pushState({}, null , url.toString());
+            }else{
+                $('#txtSearch').val(decodeURIComponent(Cookies.get('filter') || ''));
+            }
             $('#txtSearch').on('keyup', listFileter);
             txtSearch.dispatchEvent(new Event('keyup'));
             $('.publish').show();
@@ -112,7 +118,7 @@
 <body>
 
     <div class="top-title">
-        <label><a href="/">File List</b></a></label>
+        <label><a href="/">File List</a></label>
         <span class="path"><%= path !== '' ? '( '+path+' )' : '' %></span>
         <img class="refresh" src="/images/refresh.svg" width="18px">
     </div>
