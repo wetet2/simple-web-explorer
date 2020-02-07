@@ -27,7 +27,7 @@ router.get('/*/', function (req, res, next) {
             if (stat.isDirectory()) {
                 fs.readdir(path, (err, files) => {
                     if (err) {
-                        res.render('index', {
+                        res.render('index.html', {
                             folderArr: [],
                             fileArr: [],
                             path: url,
@@ -45,7 +45,7 @@ router.get('/*/', function (req, res, next) {
                         return i !== pathCount - 1;
                     })
 
-                    res.render('index', {
+                    res.render('index.html', {
                         folderArr,
                         fileArr,
                         path: url,

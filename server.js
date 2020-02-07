@@ -2,7 +2,6 @@ var app = require('./server/app');
 var http = require('http');
 var config = require('./server/config');
 var port = process.env.PORT || config.port;
-var a = 0;
 app.set('port', port);
 var server = http.createServer(app);
 server.listen(port);
