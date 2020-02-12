@@ -36,7 +36,7 @@ app.use((req, res, next) => {
 
 app.use('/__auth', authRouter);
 app.use((req, res, next) => {
-    if(config.needLogin){
+    if(config.useLogin){
         if(sessionManager.isValid(req.session.id)){
             next();
         }else{

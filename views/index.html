@@ -13,13 +13,12 @@
     <link rel='stylesheet' href='/css/style.css' />
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="/js/js.cookie.js"></script>
+    <script src="/js/common.js"></script>
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
 
     <script type="text/javascript">
         var cookieName = 'lastPage';
-
         var isMobile = $(window).width() >= 767 ? true : false;
-
         var isSafari = /Safari/.test(navigator.userAgent) && /Apple/.test(navigator.vendor);
         if (isSafari) {
             setLastPage();
@@ -40,18 +39,67 @@
                 url.searchParams.set('sort', this.value);
                 moveTo(url.toString());
             })
-            
+
+            /************* Filter **************/
             var urlFilter = url.searchParams.get('filter');
-            if(urlFilter){
+            if (urlFilter) {
                 Cookies.set('filter', encodeURIComponent(urlFilter))
-                $('#txtSearch').val(urlFilter);
+                $('#txtFilter').val(urlFilter);
                 url.searchParams.delete('filter');
-                window.history.pushState({}, null , url.toString());
-            }else{
-                $('#txtSearch').val(decodeURIComponent(Cookies.get('filter') || ''));
+                window.history.pushState({}, null, url.toString());
+            } else {
+                $('#txtFilter').val(decodeURIComponent(Cookies.get('filter') || ''));
             }
-            $('#txtSearch').on('keyup', listFileter);
-            txtSearch.dispatchEvent(new Event('keyup'));
+            $('#txtFilter').on('keyup', listFileter);
+            $('#txtFilter').trigger('keyup');
+            // txtFilter.dispatchEvent(new Event('keyup'));
+            /************* Filter **************/
+
+
+            /************* Search **************/
+            $('#txtSearch').on('keyup', function (e) {
+                if (e.keyCode === 13) { // Enter
+                    // url.searchParams.set('search', this.value);
+                    // window.history.pushState({}, null, url.toString());
+                    window.location.href = '/__search?searchText=' + this.value + '&rootUrl=' + location
+                        .pathname;
+                }
+
+                if (!e.target.value || e.target.value == '') {
+                    $(e.target).parent().find('button').hide();
+                } else {
+                    $(e.target).parent().find('button').show();
+                }
+            });
+            $('#txtSearch').trigger('keyup');
+            /************* Saerch **************/
+
+            $('.btn-upload').click(function () {
+                $('#uploadFile').click();
+            })
+            $("#uploadFile").change(function () {
+                var data = new FormData();
+                $.each($('#uploadFile')[0].files, function (i, file) {
+                    data.append('file-' + i, file);
+                });
+                $.ajax({
+                    url: '/__upload?path='+location.pathname,
+                    data: data,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    method: 'POST',
+                    success: function(data){
+                        alert('업로드 완료!')
+                        window.location.reload();
+                    },
+                    error: function(err){
+                        alert('업로드 에러가 발생하였습니다.');
+                        console.log(err);
+                    }
+                });
+            });
+
             $('.publish').show();
         })
 
@@ -66,52 +114,39 @@
             })
         }
 
-        function moveTo(path, isFile) {
-            if (isFile) Cookies.set(cookieName, encodeURIComponent(path));
-            Cookies.set('filter', encodeURIComponent($('#txtSearch').val()))
-            window.location.href = path;
-        }
-
-
-        function copyToClip(path, ele) {
-            var fullPath = window.location.origin + path;
-            var t = document.createElement("input");
-            t.style.opacity = 0;
-            document.body.appendChild(t);
-            t.value = fullPath;
-            t.select();
-            document.execCommand('copy');
-            document.body.removeChild(t);
-
-            $(ele).addClass('copied')
-        }
-
-        function listFileter(e){
-            if(!e.target.value || e.target.value == ''){
+        function listFileter(e) {
+            if (!e.target.value || e.target.value == '') {
                 $('.file-table tr').show();
                 $(e.target).parent().find('button').hide();
-            }
-            else{
+            } else {
                 $(e.target).parent().find('button').show();
-                $('.file-table tr').each(function(i,item){
-                    if($(item).find('.file-name').text().toLowerCase().trim().indexOf(e.target.value.toLowerCase()) < 0){
+                $('.file-table tr').each(function (i, item) {
+                    if ($(item).find('.file-name').text().toLowerCase().trim().indexOf(e.target.value
+                            .toLowerCase()) < 0) {
                         $(item).hide();
-                    }else{
+                    } else {
                         $(item).show();
                     }
                 })
             }
-            if(e.keyCode === 13){ // Enter
+            if (e.keyCode === 13) { // Enter
                 $(e.target).blur();
             }
         }
-        function clearFilter(){
-            var txtSearch = document.querySelector('#txtSearch');
-            txtSearch.value = '';
+
+        function clearFilter() {
+            var txtFilter = document.querySelector('#txtFilter');
+            txtFilter.value = '';
             Cookies.set('filter', '');
-            txtSearch.dispatchEvent(new Event('keyup'));
+            txtFilter.dispatchEvent(new Event('keyup'));
         }
 
+        function clearSearch() {
+            var txtSearch = document.querySelector('#txtSearch');
+            txtSearch.value = '';
+            Cookies.set('search', '');
+            txtSearch.dispatchEvent(new Event('keyup'));
+        }
     </script>
 </head>
 
@@ -124,8 +159,14 @@
     </div>
     <div class="condition-area">
         <div class="wrap">
+            <% if(useSearch){ %>
             <div class="search-filter">
                 <input type="text" id="txtSearch" placeholder="Search Text">
+                <button onclick="clearSearch();"></button>
+            </div>
+            <% } %>
+            <div class="search-filter">
+                <input type="text" id="txtFilter" placeholder="Filter Text">
                 <button onclick="clearFilter();"></button>
             </div>
             <select name="" id="cboSort">
@@ -134,6 +175,10 @@
                 <option value="3">날짜 내림차순</option>
                 <option value="4">날짜 오름차순</option>
             </select>
+            <% if(useSearch){ %>
+            <input type="file" name="uploadFile" id="uploadFile">
+            <button class="btn-upload">Upload</button>
+            <% } %>
         </div>
     </div>
 
@@ -148,8 +193,10 @@
             </colgroup>
             <tbody>
                 <tr class="folders prev-folder">
-                    <td onclick="moveTo('<%= (prevPath === '' ? '/' : prevPath)  %>')"><img src="/images/folder.svg"> </td>
-                    <td class="file-name prev-folder" onclick="moveTo('<%= (prevPath === '' ? '/' : prevPath)  %>')">..</td>
+                    <td onclick="moveTo('<%= (prevPath === '' ? '/' : prevPath)  %>')"><img src="/images/folder.svg">
+                    </td>
+                    <td class="file-name prev-folder" onclick="moveTo('<%= (prevPath === '' ? '/' : prevPath)  %>')">..
+                    </td>
                     <td class="file-size"></td>
                     <td class="date"></td>
                     <td></td>
@@ -157,17 +204,23 @@
 
                 <% for(var i=0; i < folderArr.length ; i++) { %>
                 <tr class="folders">
-                    <td onclick="moveTo('<%= (path === '/' ? '' : path) + '/' + folderArr[i].fileName  %>')"><img src="/images/folder.svg"></td>
-                    <td class="file-name" onclick="moveTo('<%= (path === '/' ? '' : path) + '/' + folderArr[i].fileName  %>')"> <%= folderArr[i].fileName %></td>
+                    <td onclick="moveTo('<%= (path === '/' ? '' : path) + '/' + folderArr[i].fileName  %>')"><img
+                            src="/images/folder.svg"></td>
+                    <td class="file-name"
+                        onclick="moveTo('<%= (path === '/' ? '' : path) + '/' + folderArr[i].fileName  %>')">
+                        <%= folderArr[i].fileName %></td>
                     <td class="file-size"></td>
                     <td class="date"><%= folderArr[i].mDate %></td>
-                    <td class="copy" title="copy to clipboard" onclick="copyToClip('<%= (path === '/' ? '' : path) + '/' + folderArr[i].fileName +'/'  %>', this)"></td>
+                    <td class="copy" title="copy to clipboard"
+                        onclick="copyToClip('<%= (path === '/' ? '' : path) + '/' + folderArr[i].fileName +'/'  %>', this)">
+                    </td>
                 </tr>
                 <% } %>
 
                 <% for(var i=0; i < fileArr.length ; i++) { %>
                 <tr class="files">
-                    <td class="thumb" onclick="moveTo('<%= (path ==='/' ? '' : path) + "/" + fileArr[i].fileName %>', true)">
+                    <td class="thumb"
+                        onclick="moveTo('<%= (path ==='/' ? '' : path) + "/" + fileArr[i].fileName %>', true)">
                         <% if(fileArr[i].isImage){ %>
                         <div
                             style="background-image: url('<%= (path ==='/' ? '' : path) + "/" + fileArr[i].fileName %>')">
@@ -176,7 +229,8 @@
                         <img src="/images/<%= fileArr[i].icon %>.svg">
                         <% } %>
                     </td>
-                    <td class="file-name" onclick="moveTo('<%= (path ==='/' ? '' : path) + "/" + fileArr[i].fileName %>', true)">
+                    <td class="file-name"
+                        onclick="moveTo('<%= (path ==='/' ? '' : path) + "/" + fileArr[i].fileName %>', true)">
                         <a href="<%= (path ==='/' ? '' : path) + '/' + fileArr[i].fileName %>">
                             <%= fileArr[i].fileName %>
                             <img src="/images/new.svg" width="12px"

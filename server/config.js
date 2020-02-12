@@ -3,8 +3,10 @@ var config = {
     root: 'd://publish/output',
     previewImage: true,
     prefixForHidden: '_h_',
-    needLogin: false,
+    useLogin: false,
     loginPassList: ['a','1'],
-    sessionExpireMinutes: 1,
+    sessionExpireMinutes: 60,
+    useSearch: false,
+    useUpload: false,
 }
 module.exports = config;
