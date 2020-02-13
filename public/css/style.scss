@@ -206,13 +206,24 @@ $body-width: 800px;
     }
 
     .btn-upload{
-        font-size: 14px;
-        background-color: #fff;
-        padding: 0 12px;
+        width: 30px;
+        height: 30px;
         border: 0;
-        outline: none;
-        cursor: pointer;
         border-right: 1px solid #eaeaea;
+        outline: none;
+        background: #fff url(/images/upload.svg) no-repeat center center;
+        background-size: 16px;
+        cursor: pointer;
+    }
+    .btn-newfolder{
+        width: 30px;
+        height: 30px;
+        border: 0;
+        border-right: 1px solid #eaeaea;
+        outline: none;
+        background: #fff url(/images/newfolder.svg) no-repeat center center;
+        background-size: 19px;
+        cursor: pointer;
     }
     #submitUpload{
         display: none;
@@ -221,12 +232,26 @@ $body-width: 800px;
     #uploadFile{
         display: none;
     }
+
+    .upload-progress{
+        display: none;
+        position: absolute;
+        bottom: -4px;
+        left:0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(to right, #689fd7, #8cd2da 25%, #56bd97 50%, #4ab77c);
+        transition: all .3s;
+        &.active{
+            display: block;
+        }
+    }
 }
 
 
 .publish {
     width: $body-width;
-    padding: 10px 20px 50px 20px;
+    padding: 10px 20px 200px 20px;
     margin: 0 auto;
     margin-top: 70px;
 }
@@ -271,7 +296,7 @@ $td-height: 40px;
             }
         }
 
-        &:last-child {
+        &:last-child:not(.admin-options) {
             padding-right: 3px;
         }
 
@@ -282,6 +307,48 @@ $td-height: 40px;
 
             &.copied {
                 background-image: url(/images/copied.svg);
+            }
+        }
+        &.admin-options{
+            padding-left: 0;
+            padding-right: 0;
+            .button-list{
+                display: inline-block;
+                position: relative;
+                width: 20px;
+                height :20px;
+            }
+            button{
+                width: 20px;
+                height: 20px;
+                appearance: none;
+                border:0;
+                outline: none;
+                background: url(/images/menu.svg) no-repeat center center;
+                background-size: 12px;
+                cursor: pointer;
+            }
+            ul{
+                display: none;
+                position: absolute;
+                top: calc(100% + 5px);
+                right: 0;
+                z-index: 1;
+                background: #999;
+                white-space: nowrap;
+                background: #fff;
+                box-shadow: 0 3px 6px rgba(0,0,0,.3);
+                &.active{
+                    display: inline-block;
+                }
+                li{
+                    list-style: none;
+                    font-size: 12px;
+                    padding: 3px 8px;
+                    &:hover{
+                        background: #ddd;
+                    }
+                }
             }
         }
 
@@ -398,7 +465,6 @@ $td-height: 40px;
 
 
 
-
 @media (max-width: 767px) {
 
     .top-title {
@@ -432,7 +498,7 @@ $td-height: 40px;
 
     .publish {
         width: 100%;
-        padding: 10px 5px 50px 5px;
+        padding: 10px 5px 200px 5px;
         margin-top: 70px;
 
         tr td {

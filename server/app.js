@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 
 var authRouter = require('./routes/auth');
+var fileRouter = require('./routes/file');
 var indexRouter = require('./routes/index');
 var sessionManager = require('./common/sessionManager');
 const config = require('./config');
@@ -33,7 +34,13 @@ app.use((req, res, next) => {
         next();
     }
 });
-
+app.use((req, res, next) => {
+    req.remoteIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    if(req.remoteIp.indexOf(config.adminAuthIp) >= 0){
+        req.isAdmin = true;
+    }
+    next();
+})
 app.use('/__auth', authRouter);
 app.use((req, res, next) => {
     if(config.useLogin){
@@ -46,6 +53,7 @@ app.use((req, res, next) => {
         next();
     }
 });
+app.use('/__file', fileRouter);
 app.use('/', indexRouter);
 
 

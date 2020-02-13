@@ -16,6 +16,11 @@
     <script src="/js/common.js"></script>
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
 
+    <!-- jquery select2 library -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
+
     <script type="text/javascript">
         var cookieName = 'lastPage';
         var isMobile = $(window).width() >= 767 ? true : false;
@@ -34,6 +39,17 @@
                 window.location.reload();
             })
 
+            /************** button-list *****************/
+            $('.button-list button').click(function(e){
+                e.stopPropagation();
+                $(this).find('+ ul').toggleClass('active');
+                
+            })
+            $('body').click(function(e){
+                $('.button-list ul').removeClass('active');
+            })
+
+            /*************** sort ***********************/
             $('#cboSort').val(url.searchParams.get('sort') || 1);
             $('#cboSort').change(function () {
                 url.searchParams.set('sort', this.value);
@@ -61,8 +77,7 @@
                 if (e.keyCode === 13) { // Enter
                     // url.searchParams.set('search', this.value);
                     // window.history.pushState({}, null, url.toString());
-                    window.location.href = '/__search?searchText=' + this.value + '&rootUrl=' + location
-                        .pathname;
+                    window.location.href = '/__file/search?searchText=' + this.value + '&rootUrl=' + location.pathname;
                 }
 
                 if (!e.target.value || e.target.value == '') {
@@ -72,37 +87,96 @@
                 }
             });
             $('#txtSearch').trigger('keyup');
-            /************* Saerch **************/
+            /**************************************/
 
+            /*************** upload ***************/
+            var uploadProgressView = function(e) {
+                if (e.lengthComputable) {
+                    var max = e.total;
+                    var current = e.loaded;
+                    var percentage = parseInt((current * 100) / max);
+                    progressBar(true, percentage);
+                }
+            }
             $('.btn-upload').click(function () {
                 $('#uploadFile').click();
             })
+            
             $("#uploadFile").change(function () {
                 var data = new FormData();
                 $.each($('#uploadFile')[0].files, function (i, file) {
                     data.append('file-' + i, file);
                 });
                 $.ajax({
-                    url: '/__upload?path='+location.pathname,
+                    url: '/__file/upload?path=' + location.pathname,
                     data: data,
                     cache: false,
                     contentType: false,
                     processData: false,
                     method: 'POST',
-                    success: function(data){
+                    success: function (data) {
                         alert('업로드 완료!')
                         window.location.reload();
                     },
-                    error: function(err){
+                    xhr: function () {
+                        var myXhr = $.ajaxSettings.xhr();
+                        if (myXhr.upload) {
+                            myXhr.upload.addEventListener('progress', uploadProgressView, false);
+                        }
+                        return myXhr;
+                    },
+                    error: function (err) {
                         alert('업로드 에러가 발생하였습니다.');
+                        progressBar(false);
                         console.log(err);
                     }
                 });
             });
 
+            /****************** new folder ***********************/
+            $('.btn-newfolder').click(function () {
+                var folderName = prompt("생성할 폴더명을 입력해주세요", "");
+                console.log(folderName);
+                if (folderName == null) return;
+                if (folderName.trim() == '') {
+                    alert('폴더명을 입력해주세요');
+                } else {
+                    $.ajax({
+                        url: '/__file/newfolder',
+                        data: { 
+                            folderName: folderName,
+                            path: location.pathname,
+                        },
+                        method: 'POST',
+                        success: function (data) {
+                            if(data.errorMsg){
+                                alert(data.errorMsg);
+                            }else{
+                                window.location.reload();
+                            }
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    });
+                }
+            })
+
+
+            /********************************************************************************/
             $('.publish').show();
         })
 
+        function progressBar(isShown, percent){
+            if(isShown){
+                $('.upload-progress').show();
+                $('.upload-progress').css('width', percent+'%');
+                
+            }else{
+                $('.upload-progress').hide();
+                $('.upload-progress').css('width', '0');
+            }
+        }
         function setLastPage() {
             var lastPage = decodeURIComponent(Cookies.get(cookieName));
             $('.file-name a').closest('td').removeClass('last-page');
@@ -153,7 +227,7 @@
 <body>
 
     <div class="top-title">
-        <label><a href="/">File List</a></label>
+        <label><a href="/">Little Forest Storage</a></label>
         <span class="path"><%= path !== '' ? '( '+path+' )' : '' %></span>
         <img class="refresh" src="/images/refresh.svg" width="18px">
     </div>
@@ -176,10 +250,18 @@
                 <option value="4">날짜 오름차순</option>
             </select>
             <% if(useSearch){ %>
-            <input type="file" name="uploadFile" id="uploadFile">
-            <button class="btn-upload">Upload</button>
+            <div>
+                <input type="file" name="uploadFile" id="uploadFile">
+                <button class="btn-upload" title="파일 업로드"></button>
+            </div>
+            <% } %>
+            <% if(canCreateFolder){ %>
+            <div>
+                <button class="btn-newfolder" title="폴더 생성"></button>
+            </div>
             <% } %>
         </div>
+        <div class="upload-progress"></div>
     </div>
 
     <div class="publish" style="display:none;">
@@ -190,6 +272,10 @@
                 <col style="width:80px;" />
                 <col style="width:145px;" />
                 <col style="width:30px;" />
+                <% if(isAdmin){ %>
+                <col style="width:30px;" />
+                <% } %>
+
             </colgroup>
             <tbody>
                 <tr class="folders prev-folder">
@@ -200,6 +286,9 @@
                     <td class="file-size"></td>
                     <td class="date"></td>
                     <td></td>
+                    <% if(isAdmin){ %>
+                    <td></td>
+                    <% } %>
                 </tr>
 
                 <% for(var i=0; i < folderArr.length ; i++) { %>
@@ -214,6 +303,17 @@
                     <td class="copy" title="copy to clipboard"
                         onclick="copyToClip('<%= (path === '/' ? '' : path) + '/' + folderArr[i].fileName +'/'  %>', this)">
                     </td>
+                    <% if(isAdmin){ %>
+                        <td class="admin-options">
+                            <div class="button-list">
+                                <button></button>
+                                <ul>
+                                    <li onClick="deleteFile('<%= path %>', '<%= folderArr[i].fileName %>')">삭제</li>
+                                    <li onClick="changeName('<%= path %>', '<%= folderArr[i].fileName %>')">이름변경</li>
+                                </ul>
+                            </div>
+                        </td>
+                    <% } %>
                 </tr>
                 <% } %>
 
@@ -243,6 +343,18 @@
                     <td class="date"><%= fileArr[i].mDate %></td>
                     <td class="copy" title="copy to clipboard"
                         onclick="copyToClip('<%= (path ==='/' ? '' : path) + "/" + fileArr[i].fileName %>', this)"></td>
+
+                    <% if(isAdmin){ %>
+                        <td class="admin-options">
+                            <div class="button-list">
+                                <button></button>
+                                <ul>
+                                    <li onClick="deleteFile('<%= path %>', '<%= fileArr[i].fileName %>')">삭제</li>
+                                    <li onClick="changeName('<%= path %>', '<%= fileArr[i].fileName %>')">이름변경</li>
+                                </ul>
+                            </div>
+                        </td>
+                    <% } %>
                 </tr>
                 <% } %>
 
@@ -250,6 +362,8 @@
 
         </table>
     </div>
+
+    
 
 </body>
 
