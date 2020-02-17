@@ -235,12 +235,12 @@
         <div class="wrap">
             <% if(useSearch){ %>
             <div class="search-filter">
-                <input type="text" id="txtSearch" placeholder="Search Text">
+                <input type="text" id="txtSearch" placeholder="Search File">
                 <button onclick="clearSearch();"></button>
             </div>
             <% } %>
             <div class="search-filter">
-                <input type="text" id="txtFilter" placeholder="Filter Text">
+                <input type="text" id="txtFilter" placeholder="Filter Name">
                 <button onclick="clearFilter();"></button>
             </div>
             <select name="" id="cboSort">
@@ -252,12 +252,12 @@
             <% if(useSearch){ %>
             <div>
                 <input type="file" name="uploadFile" id="uploadFile">
-                <button class="btn-upload" title="파일 업로드"></button>
+                <button class="btn-upload" title="파일 업로드">&nbsp;</button>
             </div>
             <% } %>
             <% if(canCreateFolder){ %>
             <div>
-                <button class="btn-newfolder" title="폴더 생성"></button>
+                <button class="btn-newfolder" title="폴더 생성">&nbsp;</button>
             </div>
             <% } %>
         </div>

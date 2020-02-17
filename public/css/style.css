@@ -18,7 +18,7 @@ a { text-decoration: none; color: #000; font-weight: 400; }
 
 .hide { display: none; }
 
-.top-title { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center; position: fixed; top: 0; left: 0; width: 100%; height: 40px; background: -webkit-gradient(linear, left top, right top, from(#689fd7), color-stop(25%, #8cd2da), color-stop(50%, #56bd97), to(#4ab77c)); background: linear-gradient(to right, #689fd7, #8cd2da 25%, #56bd97 50%, #4ab77c); border-bottom: 1px solid #ddd; padding: 10px 10px; }
+.top-title { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center; position: fixed; top: 0; left: 0; width: 100%; height: 40px; background: -webkit-gradient(linear, left top, right top, from(#689fd7), color-stop(25%, #8cd2da), color-stop(50%, #56bd97), to(#4ab77c)); background: linear-gradient(to right, #689fd7, #8cd2da 25%, #56bd97 50%, #4ab77c); border-bottom: 1px solid #ddd; padding: 10px 10px; z-index: 1; }
 
 .top-title h4 { width: 100%; text-align: center; }
 
@@ -30,7 +30,7 @@ a { text-decoration: none; color: #000; font-weight: 400; }
 
 .top-title > span { font-size: 14px; font-weight: 400; color: #fff; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.15); vertical-align: 2px; margin-left: 10px; }
 
-.condition-area { position: fixed; top: 40px; width: 100%; height: 30px; background-color: #fff; -webkit-box-shadow: 0px 0px 10px -2px #aaa; box-shadow: 0px 0px 10px -2px #aaa; }
+.condition-area { position: fixed; top: 40px; width: 100%; height: 30px; background-color: #fff; -webkit-box-shadow: 0px 0px 10px -2px #aaa; box-shadow: 0px 0px 10px -2px #aaa; z-index: 1; }
 
 .condition-area input, .condition-area select { border: 0; }
 

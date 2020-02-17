@@ -82,6 +82,7 @@ a {
     background: linear-gradient(to right, #689fd7, #8cd2da 25%, #56bd97 50%, #4ab77c);
     border-bottom: 1px solid #ddd;
     padding: 10px 10px;
+    z-index: 1;
 
     h4{
         width: 100%;
@@ -126,7 +127,8 @@ $body-width: 800px;
     height: 30px;
     background-color: #fff;
     box-shadow: 0px 0px 10px -2px #aaa;
-
+    z-index: 1;
+    
     input,
     select {
         border: 0;
@@ -495,7 +497,6 @@ $td-height: 40px;
             display: inline;
         }
     }
-
     .publish {
         width: 100%;
         padding: 10px 5px 200px 5px;
