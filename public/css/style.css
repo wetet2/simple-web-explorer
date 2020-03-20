@@ -62,9 +62,9 @@ a { text-decoration: none; color: #000; font-weight: 400; }
 
 .condition-area select { border: 0; height: 100%; font-size: 14px; padding: 0 8px; }
 
-.condition-area .btn-upload { width: 30px; height: 30px; border: 0; border-right: 1px solid #eaeaea; outline: none; background: #fff url(/images/upload.svg) no-repeat center center; background-size: 16px; cursor: pointer; }
+.condition-area .btn-upload { width: 30px; height: 30px; border: 0; border-right: 1px solid #eaeaea; outline: none; background: #fff url(/images/upload.svg) no-repeat center center; background-size: 60%; cursor: pointer; }
 
-.condition-area .btn-newfolder { width: 30px; height: 30px; border: 0; border-right: 1px solid #eaeaea; outline: none; background: #fff url(/images/newfolder.svg) no-repeat center center; background-size: 19px; cursor: pointer; }
+.condition-area .btn-newfolder { width: 30px; height: 30px; border: 0; border-right: 1px solid #eaeaea; outline: none; background: #fff url(/images/newfolder.svg) no-repeat center center; background-size: 70%; cursor: pointer; }
 
 .condition-area #submitUpload { display: none; }
 

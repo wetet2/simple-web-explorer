@@ -214,7 +214,7 @@ $body-width: 800px;
         border-right: 1px solid #eaeaea;
         outline: none;
         background: #fff url(/images/upload.svg) no-repeat center center;
-        background-size: 16px;
+        background-size: 60%;
         cursor: pointer;
     }
     .btn-newfolder{
@@ -224,7 +224,7 @@ $body-width: 800px;
         border-right: 1px solid #eaeaea;
         outline: none;
         background: #fff url(/images/newfolder.svg) no-repeat center center;
-        background-size: 19px;
+        background-size: 70%;
         cursor: pointer;
     }
     #submitUpload{
