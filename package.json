@@ -3,7 +3,7 @@
   "version": "1.0",
   "private": true,
   "scripts": {
-    "start:dev": "node ./node_modules/nodemon/bin/nodemon server.js -w server/ -w server.js --ignore node_modules/*",
+    "start:server": "node ./node_modules/nodemon/bin/nodemon server.js -w server/ -w server.js --ignore node_modules/*",
     "start": "node server"
   },
   "dependencies": {

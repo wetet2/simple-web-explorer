@@ -27,7 +27,6 @@ router.get('/*/', function (req, res, next) {
                             prevPath: '',
                         }));
 
-                        
                         return;
                     }
 
