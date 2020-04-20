@@ -35,11 +35,14 @@ app.use((req, res, next) => {
     }
 });
 app.use((req, res, next) => {
-    req.remoteIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    if(req.remoteIp.indexOf(config.adminAuthIp) >= 0){
-        req.isAdmin = true;
-    }
-    next();
+   req.remoteIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+   let ip = /\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/.exec(req.remoteIp);
+   if(ip && ip.length > 0){
+      if (config.adminAuthIp.indexOf(ip[0]) >= 0) {
+         req.isAdmin = true;
+      }
+   }
+   next();
 })
 app.use('/__auth', authRouter);
 app.use((req, res, next) => {
