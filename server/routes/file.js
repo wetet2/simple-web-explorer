@@ -8,6 +8,8 @@ var util = require('../common/util');
 var config = require('../config');
 const node_path = require('path');
 
+const rootPath = process.nodeArgs.root || config.root;
+
 var searchRootUrl = '';
 var recursiveSearchResult = [];
 var recursiveSearch = function (path, searchText, req, res) {
@@ -23,7 +25,7 @@ var recursiveSearch = function (path, searchText, req, res) {
       if (stat.isFile()) {
          if (e.toLowerCase().indexOf(searchText) >= 0) {
             recursiveSearchResult.push({
-               path: path.replace(config.root, ''),
+               path: path.replace(rootPath, ''),
                fileName: e,
                mDate: moment(stat.mtime).format('YYYY-MM-DD HH:mm:ss'),
                isRecentUpdated: util.isRecentUpdated(stat.mtime),
@@ -39,7 +41,7 @@ var recursiveSearch = function (path, searchText, req, res) {
       }
    });
 
-   if (path === config.root + (req.query.rootUrl || '')) {
+   if (path === rootPath + (req.query.rootUrl || '')) {
       res.render('search.html', util.renderObject({
          fileArr: recursiveSearchResult,
          searchText: searchText
@@ -53,7 +55,7 @@ router.post('/upload', function (req, res, next) {
    form.maxFileSize = 1024 * 1024 * 1024;
    form.parse(req);
    form.on('fileBegin', function (name, file) {
-      file.path = config.root + '/' + folder + '/' + file.name;
+      file.path = `${rootPath}/${folder}/${file.name}`.normalize('NFC');
    });
    form.on('file', function (name, file) {
       console.log('Uploaded', file.name, new Date());
@@ -62,7 +64,7 @@ router.post('/upload', function (req, res, next) {
 });
 
 router.get('/search', function (req, res, next) {
-   searchRootUrl = config.root + (decodeURIComponent(req.query.rootUrl) || '')
+   searchRootUrl = rootPath + (decodeURIComponent(req.query.rootUrl) || '')
    let searchText = decodeURIComponent(req.query.searchText).toLowerCase();
    recursiveSearchResult = [];
    recursiveSearch(searchRootUrl, searchText, req, res);
@@ -70,7 +72,7 @@ router.get('/search', function (req, res, next) {
 
 
 router.post('/newfolder', function (req, res, next) {
-   let newFolderPath = node_path.join(decodeURIComponent(config.root), decodeURIComponent(req.body.path), decodeURIComponent(req.body.folderName));
+   let newFolderPath = node_path.join(decodeURIComponent(rootPath), decodeURIComponent(req.body.path), decodeURIComponent(req.body.folderName));
    console.log('created: ', newFolderPath);
 
    if (!fs.existsSync(newFolderPath)) {
@@ -82,8 +84,8 @@ router.post('/newfolder', function (req, res, next) {
 });
 
 router.post('/rename', function (req, res, next) {
-   let currentFile = config.root + '/' + req.body.path + '/' + req.body.fileName;
-   let newFile = config.root + '/' + req.body.path + '/' + req.body.newFileName;
+   let currentFile = rootPath + '/' + req.body.path + '/' + req.body.fileName;
+   let newFile = rootPath + '/' + req.body.path + '/' + req.body.newFileName;
    if (fs.existsSync(currentFile)) {
       fs.rename(currentFile, newFile, function (e) {
          if (e) {
@@ -97,7 +99,7 @@ router.post('/rename', function (req, res, next) {
    }
 });
 router.post('/delete', function (req, res, next) {
-   let file = node_path.join(decodeURIComponent(config.root), decodeURIComponent(req.body.path), decodeURIComponent(req.body.fileName));
+   let file = node_path.join(decodeURIComponent(rootPath), decodeURIComponent(req.body.path), decodeURIComponent(req.body.fileName));
    console.log('deleted:', file);
    let stat = fs.lstatSync(file);
    if (stat.isFile()) {

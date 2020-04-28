@@ -37,7 +37,8 @@ app.use((req, res, next) => {
 app.use((req, res, next) => {
    req.remoteIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
    let ip = /\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/.exec(req.remoteIp);
-   if(ip && ip.length > 0){
+   if(req.remoteIp === '::1') req.isAdmin = true;
+   else if(ip && ip.length > 0){
       if (config.adminAuthIp.indexOf(ip[0]) >= 0) {
          req.isAdmin = true;
       }

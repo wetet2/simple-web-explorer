@@ -1,5 +1,5 @@
 {
-  "name": "simple-web-explorer",
+  "name": "node-file-list",
   "version": "1.0",
   "private": true,
   "scripts": {
@@ -16,6 +16,7 @@
     "formidable": "^1.2.1",
     "http-errors": "~1.6.2",
     "moment": "^2.22.1",
+    "nopt": "^4.0.3",
     "rimraf": "^3.0.2"
   },
   "devDependencies": {

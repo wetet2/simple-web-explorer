@@ -1,7 +1,9 @@
+require('./server/nodeArgs');
 var app = require('./server/app');
 var http = require('http');
 var config = require('./server/config');
-var port = process.env.PORT || config.port;
+
+var port = process.nodeArgs.port || config.port || 80;
 app.set('port', port);
 var server = http.createServer(app);
 server.listen(port);

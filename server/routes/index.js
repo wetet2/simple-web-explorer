@@ -3,7 +3,7 @@ var router = express.Router();
 var fs = require('fs');
 var config = require('../config');
 var util = require('../common/util');
-const rootPath = config.root;
+const rootPath = process.nodeArgs.root || config.root;
 
 router.get('/*/', function (req, res, next) {
     let url = util.makeUrl(req.url);

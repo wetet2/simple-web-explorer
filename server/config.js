@@ -4,7 +4,7 @@ var config = {
     previewImage: true,
     prefixForHidden: '_h_',
     useLogin: false,
-    loginPassList: ['a','1'],
+    loginPassList: ['YourPassword1','YourPassword2', '1', 'a'],
     sessionExpireMinutes: 60,
     useSearch: true,
     useUpload: true,
