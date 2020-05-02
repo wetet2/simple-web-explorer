@@ -10,6 +10,7 @@ var authRouter = require('./routes/auth');
 var fileRouter = require('./routes/file');
 var indexRouter = require('./routes/index');
 var sessionManager = require('./common/sessionManager');
+var requestIp = require('request-ip');
 const config = require('./config');
 
 var app = express();
@@ -23,7 +24,7 @@ app.set('views', path.join(__dirname, '../views'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'ejs');
 
-app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../public')));
@@ -35,25 +36,26 @@ app.use((req, res, next) => {
     }
 });
 app.use((req, res, next) => {
-   req.remoteIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-   let ip = /\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/.exec(req.remoteIp);
-   if(req.remoteIp === '::1') req.isAdmin = true;
-   else if(ip && ip.length > 0){
-      if (config.adminAuthIp.indexOf(ip[0]) >= 0) {
-         req.isAdmin = true;
-      }
-   }
-   next();
+    let clientIp = requestIp.getClientIp(req);
+    let ip = /\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/.exec(clientIp);
+    if (clientIp === '::1') req.isAdmin = true;
+    else if (clientIp === '::ffff:127.0.0.1') req.isAdmin = true;
+    else if (ip && ip.length > 0) {
+        if (config.adminAuthIp.indexOf(ip[0]) >= 0) {
+            req.isAdmin = true;
+        }
+    }
+    next();
 })
 app.use('/__auth', authRouter);
 app.use((req, res, next) => {
-    if(config.useLogin){
-        if(sessionManager.isValid(req.session.id)){
+    if (config.useLogin) {
+        if (sessionManager.isValid(req.session.id)) {
             next();
-        }else{
+        } else {
             res.render('login.html');
-        }   
-    }else{
+        }
+    } else {
         next();
     }
 });
