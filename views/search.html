@@ -18,7 +18,19 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
+            let searchParams = new URLSearchParams(location.search);
+
+            $('.top-title h4 a').on('click', function(){
+                window.location.href = searchParams.get('rootUrl');
+            })
+            $('.top-title h4 a').text('Search Result ( ' + searchParams.get('rootUrl') + ' )');
+            
             $('#txtSearch').val('<%= searchText %>');
+            $('#txtSearch').on('keyup', function (e) {
+                if (e.keyCode === 13) { // Enter
+                    window.location.href = '/__file/search?searchText=' + this.value + '&rootUrl=' + searchParams.get('rootUrl');
+                }
+            })
         })
     </script>
 </head>
@@ -26,10 +38,10 @@
 <body>
 
     <div class="top-title">
-        <h4><a onclick="window.history.back();" title="뒤로가기">Search Result</a></h4>
+        <h4><a></a></h4>
     </div>
     <div class="condition-area">
-        <div class="wrap">
+        <div class="condition-area-wrap">
             <div class="search-filter">
                 <input type="text" id="txtSearch" placeholder="Search Text">
                 <!-- <button onclick="window.history.back();"></button> -->
@@ -38,6 +50,7 @@
     </div>
 
     <div class="publish">
+        <% if(fileArr && fileArr.length > 0) { %>
         <table class="file-table">
             <colgroup>
                 <col style="width:30px;" />
@@ -62,7 +75,7 @@
                     <td class="file-name"
                         onclick="moveTo('<%= (fileArr[i].path ==='/' ? '' : fileArr[i].path) + "/" + fileArr[i].fileName %>', true)">
                         <a href="<%= (fileArr[i].path ==='/' ? '' : fileArr[i].path) + '/' + fileArr[i].fileName %>">
-                            <%= fileArr[i].fileName %>
+                            <%= (fileArr[i].path ==='/' ? '' : fileArr[i].path) + "/" + fileArr[i].fileName %>
                             <img src="/images/new.svg" width="12px"
                                 class="<%= fileArr[i].isRecentCreated ? '' : 'hide' %>">
                             <img src="/images/updated.svg" width="12px"
@@ -72,11 +85,17 @@
                     <td class="file-size"><%= fileArr[i].size %></td>
                     <td class="date"><%= fileArr[i].mDate %></td>
                     <td class="copy" title="copy to clipboard"
-                        onclick="copyToClip('<%= (fileArr[i].path ==='/' ? '' : fileArr[i].path) + "/" + fileArr[i].fileName %>', this)"></td>
+                        onclick="copyToClip('<%= (fileArr[i].path ==='/' ? '' : fileArr[i].path) + "/" + fileArr[i].fileName %>', this)">
+                    </td>
                 </tr>
                 <% } %>
+
             </tbody>
         </table>
+        <% } %>
+        <% if(!fileArr || fileArr.length === 0) { %>
+        <div class="no-search-result">No Result</div>
+        <% } %>
     </div>
 
 </body>
