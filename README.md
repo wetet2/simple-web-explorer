@@ -1,8 +1,7 @@
 # simple-web-explorer
 This is a reponsive web file explorer on NodeJS with Express such as IIS Directory search.  
-I made this for sharing files on my system.
-It's very easy and convenient for coworkers to check my files  
-
+simple-web-explorer is made for sharing files and viewing some images easily.
+It's very useful and convenient sharing something with coworkers.
 
 ``` npm install yarn -g && yarn install ```
 
