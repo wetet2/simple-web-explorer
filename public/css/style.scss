@@ -95,8 +95,6 @@ a {
    h4 {
       width: 100%;
       text-align: center;
-      ;
-
       a {
          font-size: 15px;
          font-weight: normal;
@@ -489,6 +487,12 @@ $td-height: 40px;
 }
 
 
+.no-search-result{
+   padding: 10px 0;
+    text-align: center;
+    color: #ccc;
+}
+
 
 @media (max-width: 767px) {
 
@@ -567,7 +571,8 @@ $td-height: 40px;
          padding: 0;
 
          .search-filter input {
-            font-size: 12px;
+            font-size: 14px;
+            height: 30px;
          }
 
          select {

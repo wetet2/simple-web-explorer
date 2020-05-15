@@ -5,12 +5,14 @@ It's very useful and convenient sharing something with coworkers.
 
 ``` npm install yarn -g && yarn install ```
 
-then
+then copy server/config.default.js to config.js in the same folder and modify config.js with your information.
+
+To start,
 
 ``` yarn start ```
   
    
-<kbd>![Sample](https://github.com/wetet2/node-file-list/blob/master/doc/pc_img.png)  </kbd>
+<kbd>![Sample](https://github.com/wetet2/simple-web-explorer/blob/master/doc/pc_img.png)  </kbd>
   
 
 

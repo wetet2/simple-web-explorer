@@ -16,6 +16,8 @@ var recursiveSearch = function (path, searchText, req, res) {
    let files = fs.readdirSync(path);
    files.forEach((e, i) => {
       if (e.indexOf(config.prefixForHidden) >= 0) return;
+      if (e.toLowerCase().indexOf('node_modules') >= 0) return;
+
       let stat = fs.lstatSync(path + '/' + e);
       let isImage = false;
       if (config.previewImage && stat.size <= 1048576) { // show thumb image smaller than 1MB
