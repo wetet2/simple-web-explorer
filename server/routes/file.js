@@ -6,12 +6,11 @@ var fs = require('fs');
 var rimraf = require("rimraf");
 var util = require('../common/util');
 var config = require('../config');
-const node_path = require('path');
-
+const nodePath = require('path');
 const rootPath = process.nodeArgs.root || config.root;
-
 var excludeItems = config.searchExclude || [];
 var searchRootUrl = '';
+
 var recursiveSearchResult = [];
 var recursiveSearch = function (path, searchText, req, res) {
    let files = fs.readdirSync(path);
@@ -75,7 +74,7 @@ router.get('/search', function (req, res, next) {
 });
 
 router.post('/newfolder', function (req, res, next) {
-   let newFolderPath = node_path.join(decodeURIComponent(rootPath), decodeURIComponent(req.body.path), decodeURIComponent(req.body.folderName));
+   let newFolderPath = nodePath.join(decodeURIComponent(rootPath), decodeURIComponent(req.body.path), decodeURIComponent(req.body.folderName));
    console.log('created: ', newFolderPath);
 
    if (!fs.existsSync(newFolderPath)) {
@@ -110,7 +109,11 @@ router.post('/rename', function (req, res, next) {
    }
 });
 router.post('/delete', function (req, res, next) {
-   let file = node_path.join(decodeURIComponent(rootPath), decodeURIComponent(req.body.path), decodeURIComponent(req.body.fileName));
+   if(req.body.path.indexOf('..') >= 0 || req.body.fileName.indexOf('..') >= 0){
+      res.json({errorMsg: '경로에 보안위협이 탐지되었습니다'});
+      return;
+   }
+   let file = nodePath.join(decodeURIComponent(rootPath), decodeURIComponent(req.body.path), decodeURIComponent(req.body.fileName));
    console.log('deleted:', file);
    let stat = fs.lstatSync(file);
    if (stat.isFile()) {
