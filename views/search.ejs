@@ -7,10 +7,9 @@
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Publish</title>
+    <title>HY's Repo</title>
 
-    <link rel="icon" type="image/png" sizes="96x96" href="/images/favicon.png">
-    <link rel='stylesheet' href='/css/style.css' />
+    <link rel='stylesheet' href='/css/style.min.css' />
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="/js/js.cookie.js"></script>
     <script src="/js/common.js"></script>
@@ -19,12 +18,10 @@
     <script type="text/javascript">
         $(document).ready(function () {
             let searchParams = new URLSearchParams(location.search);
-
             $('.top-title h4 a').on('click', function(){
                 window.location.href = searchParams.get('rootUrl');
             })
             $('.top-title h4 a').text('Search Result ( ' + searchParams.get('rootUrl') + ' )');
-            
             $('#txtSearch').val('<%= searchText %>');
             $('#txtSearch').on('keyup', function (e) {
                 if (e.keyCode === 13) { // Enter
@@ -41,17 +38,16 @@
         <h4><a></a></h4>
     </div>
     <div class="condition-area">
-        <div class="condition-area-wrap">
+        <div class="condition-area-wrap" style="width:auto">
             <div class="search-filter">
                 <input type="text" id="txtSearch" placeholder="Search Text">
-                <!-- <button onclick="window.history.back();"></button> -->
             </div>
         </div>
     </div>
 
     <div class="publish">
         <% if(fileArr && fileArr.length > 0) { %>
-        <table class="file-table">
+        <table class="file-table" style="width:auto">
             <colgroup>
                 <col style="width:30px;" />
                 <col style="width:auto;" />
@@ -63,19 +59,19 @@
                 <% for(var i=0; i < fileArr.length ; i++) { %>
                 <tr class="files">
                     <td class="thumb"
-                        onclick="moveTo('<%= (fileArr[i].path ==='/' ? '' : fileArr[i].path) + "/" + fileArr[i].fileName %>', true)">
+                        onclick="moveTo('<%= (fileArr[i].path ==='/' ? '' : fileArr[i].path) + '/' + fileArr[i].fileName %>', true)">
                         <% if(fileArr[i].isImage){ %>
                         <div
-                            style="background-image: url('<%= (fileArr[i].path ==='/' ? '' : fileArr[i].path) + "/" + fileArr[i].fileName %>')">
+                            style="background-image: url('<%= (fileArr[i].path ==='/' ? '' : fileArr[i].path) + '/' + fileArr[i].fileName %>')">
                         </div>
                         <% } else { %>
                         <img src="/images/<%= fileArr[i].icon %>.svg">
                         <% } %>
                     </td>
                     <td class="file-name"
-                        onclick="moveTo('<%= (fileArr[i].path ==='/' ? '' : fileArr[i].path) + "/" + fileArr[i].fileName %>', true)">
+                        onclick="moveTo('<%= (fileArr[i].path ==='/' ? '' : fileArr[i].path) + '/' + fileArr[i].fileName %>', true)">
                         <a href="<%= (fileArr[i].path ==='/' ? '' : fileArr[i].path) + '/' + fileArr[i].fileName %>">
-                            <%= (fileArr[i].path ==='/' ? '' : fileArr[i].path) + "/" + fileArr[i].fileName %>
+                            <%= (fileArr[i].path ==='/' ? '' : fileArr[i].path) + '/' + fileArr[i].fileName %>
                             <img src="/images/new.svg" width="12px"
                                 class="<%= fileArr[i].isRecentCreated ? '' : 'hide' %>">
                             <img src="/images/updated.svg" width="12px"
@@ -85,7 +81,7 @@
                     <td class="file-size"><%= fileArr[i].size %></td>
                     <td class="date"><%= fileArr[i].mDate %></td>
                     <td class="copy" title="copy to clipboard"
-                        onclick="copyToClip('<%= (fileArr[i].path ==='/' ? '' : fileArr[i].path) + "/" + fileArr[i].fileName %>', this)">
+                        onclick="copyToClip('<%= (fileArr[i].path ==='/' ? '' : fileArr[i].path) + '/' + fileArr[i].fileName %>', this)">
                     </td>
                 </tr>
                 <% } %>

@@ -10,13 +10,14 @@ const node_path = require('path');
 
 const rootPath = process.nodeArgs.root || config.root;
 
+var excludeItems = config.searchExclude || [];
 var searchRootUrl = '';
 var recursiveSearchResult = [];
 var recursiveSearch = function (path, searchText, req, res) {
    let files = fs.readdirSync(path);
    files.forEach((e, i) => {
       if (e.indexOf(config.prefixForHidden) >= 0) return;
-      if (e.toLowerCase().indexOf('node_modules') >= 0) return;
+      if (excludeItems.includes(e)) return;
 
       let stat = fs.lstatSync(path + '/' + e);
       let isImage = false;
@@ -37,14 +38,13 @@ var recursiveSearch = function (path, searchText, req, res) {
                size: util.getFileSize(stat.size)
             })
          }
-      }
-      else if (stat.isDirectory) {
+      } else if (stat.isDirectory) {
          recursiveSearch(path + '/' + e, searchText, req, res);
       }
    });
 
    if (path === rootPath + (req.query.rootUrl || '')) {
-      res.render('search.html', util.renderObject({
+      res.render('search', util.renderObject({
          fileArr: recursiveSearchResult,
          searchText: searchText
       }));
@@ -61,7 +61,9 @@ router.post('/upload', function (req, res, next) {
    });
    form.on('file', function (name, file) {
       console.log('Uploaded', file.name, new Date());
-      res.json({ name: file.name });
+      res.json({
+         name: file.name
+      });
    });
 });
 
@@ -72,16 +74,19 @@ router.get('/search', function (req, res, next) {
    recursiveSearch(searchRootUrl, searchText, req, res);
 });
 
-
 router.post('/newfolder', function (req, res, next) {
    let newFolderPath = node_path.join(decodeURIComponent(rootPath), decodeURIComponent(req.body.path), decodeURIComponent(req.body.folderName));
    console.log('created: ', newFolderPath);
 
    if (!fs.existsSync(newFolderPath)) {
       fs.mkdirSync(newFolderPath);
-      res.json({ msg: '생성완료' });
+      res.json({
+         msg: '생성완료'
+      });
    } else {
-      res.json({ errorMsg: '이미 폴더가 존재합니다' })
+      res.json({
+         errorMsg: '이미 폴더가 존재합니다'
+      })
    }
 });
 
@@ -91,13 +96,17 @@ router.post('/rename', function (req, res, next) {
    if (fs.existsSync(currentFile)) {
       fs.rename(currentFile, newFile, function (e) {
          if (e) {
-            res.json({ errorMsg: e.toString() })
+            res.json({
+               errorMsg: e.toString()
+            })
          } else {
             res.json({});
          }
       })
    } else {
-      res.json({ errorMsg: '파일이 존재하지 않습니다' })
+      res.json({
+         errorMsg: '파일이 존재하지 않습니다'
+      })
    }
 });
 router.post('/delete', function (req, res, next) {
