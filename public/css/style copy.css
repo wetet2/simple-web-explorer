@@ -150,6 +150,11 @@ a { text-decoration: none; color: #000; font-weight: 400; }
 
 .p-login .box input { width: 200px; height: 30px; border: 0; background-color: #fff; -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15); text-align: center; }
 
+.no-search-result{
+  padding: 10px 0;
+   text-align: center;
+   color: #ccc;
+}
 @media (max-width: 767px) { .top-title { min-height: 40px; -ms-flex-wrap: wrap; flex-wrap: wrap; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; padding: 0 12px; }
   .top-title label { display: none; }
   .top-title .path { -webkit-box-flex: 1; -ms-flex: 1; flex: 1; min-width: 0; display: block; width: 100%; margin-left: 0; line-height: 1.2; font-weight: 700; }
@@ -163,5 +168,5 @@ a { text-decoration: none; color: #000; font-weight: 400; }
   .sort-area { padding: 8px 0; }
   .condition-area { height: auto; }
   .condition-area .condition-area-wrap { width: 100%; padding: 0; }
-  .condition-area .condition-area-wrap .search-filter input { font-size: 12px; }
+  .condition-area .condition-area-wrap .search-filter input { font-size: 14px; height: 30px; }
   .condition-area .condition-area-wrap select { font-size: 12px; } }

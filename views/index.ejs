@@ -7,19 +7,13 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-   <title>File List</title>
+   <title>HY's Repo</title>
 
-   <link rel="icon" type="image/png" sizes="96x96" href="/images/favicon.png">
-   <link rel='stylesheet' href='/css/style.css' />
+   <link rel='stylesheet' href='/css/style.min.css' />
    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
    <script src="/js/js.cookie.js"></script>
    <script src="/js/common.js"></script>
    <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
-
-   <!-- jquery select2 library -->
-   <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
-   <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
-
 
    <script type="text/javascript">
       var cookieName = 'lastPage';
@@ -229,7 +223,7 @@
 <body>
    <div class="body-wrap">
       <div class="top-title">
-         <label><a href="/">File List</a></label>
+         <label><a href="/">Hy's Repo</a></label>
          <span class="path"><%= path !== '' ? '( '+path+' )' : '' %></span>
          <img class="refresh" src="/images/refresh.svg" width="18px">
       </div>
@@ -322,16 +316,16 @@
                <% for(var i=0; i < fileArr.length ; i++) { %>
                <tr class="files">
                   <td class="thumb"
-                     onclick="moveTo('<%= (path ==='/' ? '' : path) + "/" + fileArr[i].fileName %>', true)">
+                     onclick="moveTo('<%= (path ==='/' ? '' : path) + '/' + fileArr[i].fileName %>', true)">
                      <% if(fileArr[i].isImage){ %>
-                     <div style="background-image: url('<%= (path ==='/' ? '' : path) + "/" + fileArr[i].fileName %>')">
+                     <div style="background-image: url('<%= (path ==='/' ? '' : path) + '/' + fileArr[i].fileName %>')">
                      </div>
                      <% } else { %>
                      <img src="/images/<%= fileArr[i].icon %>.svg">
                      <% } %>
                   </td>
                   <td class="file-name"
-                     onclick="moveTo('<%= (path ==='/' ? '' : path) + "/" + fileArr[i].fileName %>', true)">
+                     onclick="moveTo('<%= (path ==='/' ? '' : path) + '/' + fileArr[i].fileName %>', true)">
                      <a href="<%= (path ==='/' ? '' : path) + '/' + fileArr[i].fileName %>">
                         <%= fileArr[i].fileName %>
                         <img src="/images/new.svg" width="12px" class="<%= fileArr[i].isRecentCreated ? '' : 'hide' %>">
@@ -342,7 +336,7 @@
                   <td class="file-size"><%= fileArr[i].size %></td>
                   <td class="date"><%= fileArr[i].mDate %></td>
                   <td class="copy" title="copy to clipboard"
-                     onclick="copyToClip('<%= (path ==='/' ? '' : path) + "/" + fileArr[i].fileName %>', this)"></td>
+                     onclick="copyToClip('<%= (path ==='/' ? '' : path) + '/' + fileArr[i].fileName %>', this)"></td>
 
                   <% if(isAdmin){ %>
                   <td class="admin-options">

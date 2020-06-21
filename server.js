@@ -1,3 +1,12 @@
+var path = require('path');
+var fs = require('fs');
+if(!fs.existsSync(path.resolve(__dirname, 'server/config.js'))){
+    console.log('=====================');
+    console.log('Copy server/config.default.js to config.js in the same folder and modify config.js with your information.')
+    console.log('=====================');
+    process.exit(1);
+}
+
 require('./server/nodeArgs');
 var app = require('./server/app');
 var http = require('http');

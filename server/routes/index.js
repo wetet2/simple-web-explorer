@@ -19,7 +19,7 @@ router.get('/*/', function (req, res, next) {
             if (stat.isDirectory()) {
                 fs.readdir(path, (err, files) => {
                     if (err) {
-                        res.render('index.html', util.renderObject({
+                        res.render('index', util.renderObject({
                             isAdmin: req.isAdmin,
                             folderArr: [],
                             fileArr: [],
@@ -39,7 +39,7 @@ router.get('/*/', function (req, res, next) {
                         return i !== pathCount - 1;
                     })
 
-                    res.render('index.html', util.renderObject({
+                    res.render('index', util.renderObject({
                         isAdmin: req.isAdmin,
                         folderArr,
                         fileArr,
