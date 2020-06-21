@@ -1,3 +1,1 @@
-:: This requires pm2 package
-:: npm install -g pm2
-pm2 start server.js --name publish-file-list
+pm2 start server.js --name LittleForestStorage -- --port 80 --root d:/nodejs/LittleForest/LittleForestStorage/storage
