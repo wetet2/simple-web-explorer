@@ -83,7 +83,6 @@ a {
   height: 40px;
   background: -webkit-gradient(linear, left top, right top, from(#689fd7), color-stop(25%, #8cd2da), color-stop(50%, #56bd97), to(#4ab77c));
   background: linear-gradient(to right, #689fd7, #8cd2da 25%, #56bd97 50%, #4ab77c);
-  border-bottom: 1px solid #ddd;
   padding: 10px 10px;
   z-index: 1;
 }
@@ -123,6 +122,7 @@ a {
 }
 
 .condition-area {
+  position: relative;
   width: 100%;
   height: 30px;
   background-color: #fff;
@@ -149,6 +149,8 @@ a {
 }
 
 .condition-area .condition-area-wrap > * {
+  border-top: 0;
+  border-bottom: 0;
   border-right: 1px solid #eaeaea;
 }
 
@@ -170,14 +172,17 @@ a {
 .condition-area .condition-area-wrap .search-filter input {
   width: 100%;
   height: 100%;
+  background: #fbffd7;
+  font-weight: 400;
 }
 
 .condition-area .condition-area-wrap .search-filter button {
   position: absolute;
-  top: 6px;
+  top: 50%;
   right: 6px;
   width: 18px;
   height: 18px;
+  margin-top: -9px;
   border-radius: 100%;
   background: #eee url(/images/x.svg) no-repeat center center;
   background-size: 8px;
@@ -199,27 +204,27 @@ a {
 }
 
 .condition-area input[type="text"]::-webkit-input-placeholder {
-  color: #ccc !important;
+  color: #bebebe !important;
   font-weight: 400;
 }
 
 .condition-area input[type="text"]:-ms-input-placeholder {
-  color: #ccc !important;
+  color: #bebebe !important;
   font-weight: 400;
 }
 
 .condition-area input[type="text"]::-ms-input-placeholder {
-  color: #ccc !important;
+  color: #bebebe !important;
   font-weight: 400;
 }
 
 .condition-area input[type="text"]::placeholder {
-  color: #ccc !important;
+  color: #bebebe !important;
   font-weight: 400;
 }
 
 .condition-area input[type="text"]:-ms-input-placeholder {
-  color: #ccc !important;
+  color: #bebebe !important;
   font-weight: 400;
 }
 
@@ -227,7 +232,11 @@ a {
   border: 0;
   height: 100%;
   font-size: 14px;
-  padding: 0 8px;
+  padding: 0 20px 0 8px;
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  background: url(/images/arrow-down.svg) no-repeat right 5px center/10px;
 }
 
 .condition-area .btn-upload {
@@ -283,7 +292,9 @@ a {
           flex: 1;
   min-height: 0;
   overflow: auto;
+  overflow: overlay;
   width: 100%;
+  padding-bottom: 100px;
 }
 
 .file-table {
@@ -519,16 +530,13 @@ a {
 
 @media (max-width: 767px) {
   .top-title {
-    min-height: 40px;
+    min-height: 50px;
     -ms-flex-wrap: wrap;
         flex-wrap: wrap;
     -webkit-box-pack: justify;
         -ms-flex-pack: justify;
             justify-content: space-between;
     padding: 0 12px;
-  }
-  .top-title label {
-    display: none;
   }
   .top-title .path {
     -webkit-box-flex: 1;
@@ -551,36 +559,80 @@ a {
   .file-table {
     width: 100%;
   }
-  .file-table td.date,
-  .file-table td.file-size {
-    display: none;
+  .file-table tr {
+    position: relative;
+    min-height: 44px;
   }
-  .file-table tr td {
+  .file-table .file-name {
+    padding-bottom: 15px;
+    padding-top: 4px;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+  }
+  .file-table td.date {
+    position: absolute;
+    display: inline;
+    bottom: 3px;
+    left: 37px;
+    min-height: auto;
+    background: none;
+    padding: 0;
+    border: 0;
+    font-size: 10px;
+    color: #bbb;
+  }
+  .file-table .file-size {
+    position: absolute;
+    display: inline;
+    bottom: 3px;
+    right: 50px;
+    min-height: auto;
+    background: none;
+    padding: 0;
+    border: 0;
+    font-size: 10px;
+    color: #bbb;
+  }
+  tr td {
     font-size: 12px !important;
   }
-  .file-table tr td:first-child img {
+  tr td:first-child img {
     width: 20px;
     height: 20px;
   }
-  .file-table tr td:nth-child(2) img {
+  tr td:nth-child(2) img {
     width: 12px;
     height: 12px;
   }
-  .sort-area {
-    padding: 8px 0;
-  }
-  .condition-area {
-    height: auto;
-  }
-  .condition-area .condition-area-wrap {
-    width: 100%;
-    padding: 0;
-  }
-  .condition-area .condition-area-wrap .search-filter input {
-    font-size: 14px;
-    height: 30px;
-  }
-  .condition-area .condition-area-wrap select {
-    font-size: 12px;
-  }
+}
+
+.sort-area {
+  padding: 8px 0;
+}
+
+.condition-area {
+  height: auto;
+  min-height: 40px;
+}
+
+.condition-area .condition-area-wrap {
+  width: 100%;
+  padding: 0;
+  height: 40px;
+}
+
+.condition-area .condition-area-wrap .search-filter input {
+  font-size: 14px;
+}
+
+.condition-area .condition-area-wrap select {
+  font-size: 12px;
+}
+
+.condition-area .btn-upload,
+.condition-area .btn-newfolder {
+  width: 40px;
+  height: 100%;
+  background-size: 50%;
 }

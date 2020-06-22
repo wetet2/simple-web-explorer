@@ -25,9 +25,10 @@ var recursiveSearch = function (path, searchText, req, res) {
          isImage = (ext == 'svg' || ext == 'png' || ext == 'jpg' || ext == 'jpeg' || ext == 'gif');
       }
       if (stat.isFile()) {
+          let _path = path.replace(rootPath, '').replace(/\/\//, '/');
          if (e.toLowerCase().indexOf(searchText) >= 0) {
             recursiveSearchResult.push({
-               path: path.replace(rootPath, ''),
+               path: _path,
                fileName: e,
                mDate: moment(stat.mtime).format('YYYY-MM-DD HH:mm:ss'),
                isRecentUpdated: util.isRecentUpdated(stat.mtime),
