@@ -1,1 +1,1 @@
-pm2 start server.js --name LittleForestStorage -- --port 80 --root d:/nodejs/LittleForest/LittleForestStorage/storage
+pm2 start server.js --name %1
