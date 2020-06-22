@@ -1,1 +1,1 @@
-pm2 start server.js --name %1
+pm2 start server.js --name Repository
