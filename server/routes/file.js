@@ -54,7 +54,7 @@ var recursiveSearch = function (path, searchText, req, res) {
 router.post('/upload', function (req, res, next) {
    let folder = decodeURIComponent(req.query.path);
    var form = new formidable.IncomingForm();
-   form.maxFileSize = 1024 * 1024 * 1024;
+   form.maxFileSize = 1024 * 1024 * 1024 * 8;
    form.parse(req);
    form.on('fileBegin', function (name, file) {
       file.path = `${rootPath}/${folder}/${file.name}`.normalize('NFC');
