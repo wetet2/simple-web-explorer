@@ -1,0 +1,10 @@
+{
+    "editor.tabSize": 4,
+    "liveSassCompile.settings.formats":[
+        {
+            "format": "expanded",
+            "extensionName": ".css",
+        }
+    ],
+    "liveSassCompile.settings.generateMap": false
+}

@@ -6,12 +6,16 @@ var fs = require('fs');
 var rimraf = require("rimraf");
 var util = require('../common/util');
 var config = require('../config');
-const node_path = require('path');
-
+const nodePath = require('path');
 const rootPath = process.nodeArgs.root || config.root;
+<<<<<<< HEAD
 
 
+=======
+var excludeItems = config.searchExclude || [];
+>>>>>>> 5b390aa8091d08111171bb1bdb6af994749db07d
 var searchRootUrl = '';
+
 var recursiveSearchResult = [];
 var recursiveSearch = function (path, searchText, req, res) {
    
@@ -23,7 +27,12 @@ var recursiveSearch = function (path, searchText, req, res) {
    let files = fs.readdirSync(path);
    files.forEach((e, i) => {
       if (e.indexOf(config.prefixForHidden) >= 0) return;
+<<<<<<< HEAD
       if (e.toLowerCase().indexOf('node_modules') >= 0) return;
+=======
+      if (excludeItems.includes(e)) return;
+
+>>>>>>> 5b390aa8091d08111171bb1bdb6af994749db07d
       let stat = fs.lstatSync(path + '/' + e);
       let isImage = false;
       if (config.previewImage && stat.size <= 1048576) { // show thumb image smaller than 1MB
@@ -31,9 +40,10 @@ var recursiveSearch = function (path, searchText, req, res) {
          isImage = (ext == 'svg' || ext == 'png' || ext == 'jpg' || ext == 'jpeg' || ext == 'gif');
       }
       if (stat.isFile()) {
+          let _path = path.replace(rootPath, '').replace(/\/\//, '/');
          if (e.toLowerCase().indexOf(searchText) >= 0) {
             recursiveSearchResult.push({
-               path: path.replace(rootPath, ''),
+               path: _path,
                fileName: e,
                mDate: moment(stat.mtime).format('YYYY-MM-DD HH:mm:ss'),
                isRecentUpdated: util.isRecentUpdated(stat.mtime),
@@ -43,14 +53,18 @@ var recursiveSearch = function (path, searchText, req, res) {
                size: util.getFileSize(stat.size)
             })
          }
-      }
-      else if (stat.isDirectory) {
+      } else if (stat.isDirectory) {
          recursiveSearch(path + '/' + e, searchText, req, res);
       }
    });
 
+<<<<<<< HEAD
    if (path === rootPath + (rootUrl == '/' ? '' : rootUrl)){
       res.render('search.html', util.renderObject({
+=======
+   if (path === rootPath + (req.query.rootUrl || '')) {
+      res.render('search', util.renderObject({
+>>>>>>> 5b390aa8091d08111171bb1bdb6af994749db07d
          fileArr: recursiveSearchResult,
          searchText: searchText
       }));
@@ -60,14 +74,16 @@ var recursiveSearch = function (path, searchText, req, res) {
 router.post('/upload', function (req, res, next) {
    let folder = decodeURIComponent(req.query.path);
    var form = new formidable.IncomingForm();
-   form.maxFileSize = 1024 * 1024 * 1024;
+   form.maxFileSize = 1024 * 1024 * 1024 * 8;
    form.parse(req);
    form.on('fileBegin', function (name, file) {
       file.path = `${rootPath}/${folder}/${file.name}`.normalize('NFC');
    });
    form.on('file', function (name, file) {
       console.log('Uploaded', file.name, new Date());
-      res.json({ name: file.name });
+      res.json({
+         name: file.name
+      });
    });
 });
 
@@ -79,16 +95,19 @@ router.get('/search', function (req, res, next) {
    recursiveSearch(searchRootUrl, searchText, req, res);
 });
 
-
 router.post('/newfolder', function (req, res, next) {
-   let newFolderPath = node_path.join(decodeURIComponent(rootPath), decodeURIComponent(req.body.path), decodeURIComponent(req.body.folderName));
+   let newFolderPath = nodePath.join(decodeURIComponent(rootPath), decodeURIComponent(req.body.path), decodeURIComponent(req.body.folderName));
    console.log('created: ', newFolderPath);
 
    if (!fs.existsSync(newFolderPath)) {
       fs.mkdirSync(newFolderPath);
-      res.json({ msg: '생성완료' });
+      res.json({
+         msg: '생성완료'
+      });
    } else {
-      res.json({ errorMsg: '이미 폴더가 존재합니다' })
+      res.json({
+         errorMsg: '이미 폴더가 존재합니다'
+      })
    }
 });
 
@@ -98,17 +117,25 @@ router.post('/rename', function (req, res, next) {
    if (fs.existsSync(currentFile)) {
       fs.rename(currentFile, newFile, function (e) {
          if (e) {
-            res.json({ errorMsg: e.toString() })
+            res.json({
+               errorMsg: e.toString()
+            })
          } else {
             res.json({});
          }
       })
    } else {
-      res.json({ errorMsg: '파일이 존재하지 않습니다' })
+      res.json({
+         errorMsg: '파일이 존재하지 않습니다'
+      })
    }
 });
 router.post('/delete', function (req, res, next) {
-   let file = node_path.join(decodeURIComponent(rootPath), decodeURIComponent(req.body.path), decodeURIComponent(req.body.fileName));
+   if(req.body.path.indexOf('..') >= 0 || req.body.fileName.indexOf('..') >= 0){
+      res.json({errorMsg: '경로에 보안위협이 탐지되었습니다'});
+      return;
+   }
+   let file = nodePath.join(decodeURIComponent(rootPath), decodeURIComponent(req.body.path), decodeURIComponent(req.body.fileName));
    console.log('deleted:', file);
    let stat = fs.lstatSync(file);
    if (stat.isFile()) {

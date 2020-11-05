@@ -5,5 +5,4 @@ const knownOpts = {
 }
 const nodeArgs = nopt(knownOpts, null, process.argv);
 process.nodeArgs = nodeArgs;
-
 module.exports = {};
