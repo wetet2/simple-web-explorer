@@ -8,12 +8,8 @@ var util = require('../common/util');
 var config = require('../config');
 const nodePath = require('path');
 const rootPath = process.nodeArgs.root || config.root;
-<<<<<<< HEAD
 
 
-=======
-var excludeItems = config.searchExclude || [];
->>>>>>> 5b390aa8091d08111171bb1bdb6af994749db07d
 var searchRootUrl = '';
 
 var recursiveSearchResult = [];
@@ -27,12 +23,7 @@ var recursiveSearch = function (path, searchText, req, res) {
    let files = fs.readdirSync(path);
    files.forEach((e, i) => {
       if (e.indexOf(config.prefixForHidden) >= 0) return;
-<<<<<<< HEAD
       if (e.toLowerCase().indexOf('node_modules') >= 0) return;
-=======
-      if (excludeItems.includes(e)) return;
-
->>>>>>> 5b390aa8091d08111171bb1bdb6af994749db07d
       let stat = fs.lstatSync(path + '/' + e);
       let isImage = false;
       if (config.previewImage && stat.size <= 1048576) { // show thumb image smaller than 1MB
@@ -58,13 +49,8 @@ var recursiveSearch = function (path, searchText, req, res) {
       }
    });
 
-<<<<<<< HEAD
    if (path === rootPath + (rootUrl == '/' ? '' : rootUrl)){
       res.render('search.html', util.renderObject({
-=======
-   if (path === rootPath + (req.query.rootUrl || '')) {
-      res.render('search', util.renderObject({
->>>>>>> 5b390aa8091d08111171bb1bdb6af994749db07d
          fileArr: recursiveSearchResult,
          searchText: searchText
       }));
