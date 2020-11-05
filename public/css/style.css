@@ -613,13 +613,13 @@ a {
 
 .condition-area {
   height: auto;
-  min-height: 40px;
+  min-height: 30px;
 }
 
 .condition-area .condition-area-wrap {
   width: 100%;
   padding: 0;
-  height: 40px;
+  height: 30px;
 }
 
 .condition-area .condition-area-wrap .search-filter input {
@@ -632,7 +632,7 @@ a {
 
 .condition-area .btn-upload,
 .condition-area .btn-newfolder {
-  width: 40px;
+  width: 30px;
   height: 100%;
   background-size: 50%;
 }

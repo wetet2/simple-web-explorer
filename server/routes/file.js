@@ -50,7 +50,7 @@ var recursiveSearch = function (path, searchText, req, res) {
    });
 
    if (path === rootPath + (rootUrl == '/' ? '' : rootUrl)){
-      res.render('search.html', util.renderObject({
+      res.render('search', util.renderObject({
          fileArr: recursiveSearchResult,
          searchText: searchText
       }));
