@@ -1,6 +1,7 @@
 var createError = require('http-errors');
 var express = require('express');
 var session = require('express-session');
+
 var path = require('path');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -22,7 +23,6 @@ app.use(session({
 app.set('views', path.join(__dirname, '../views'));
 app.engine('ejs', require('ejs').renderFile);
 app.set('view engine', 'ejs');
-
 app.use(bodyParser.urlencoded({
     extended: false
 }))
@@ -32,6 +32,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.use(favicon(path.resolve(__dirname, '../public/images/favicon.png')))
 app.use((req, res, next) => {
     let clientIp = requestIp.getClientIp(req);
+    console.log('connected client ip', clientIp);
     let ip = /\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/.exec(clientIp);
     if (clientIp === '::1' || clientIp === '::ffff:127.0.0.1') req.isAdmin = true;
     else if (ip && ip.length > 0 && config.adminAuthIp.indexOf(ip[0]) >= 0) {

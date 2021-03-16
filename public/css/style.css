@@ -35,6 +35,10 @@ textarea {
   font-family: "Noto Sans Korean", sans-serif;
 }
 
+input {
+  outline: none;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;

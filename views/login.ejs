@@ -7,7 +7,7 @@
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     
-    <title>Repository Login</title>
+    <title>HY's Repository Login</title>
     <link rel='stylesheet' href='/css/style.css' />
     <script>
         function tryLogin(a) {
@@ -19,7 +19,7 @@
                 if(res.result){
                     location.href = '/';
                 }else{
-                    alert('Wrong Password !!');
+                    alert('올바른 암호를 입력해주세요.');
                 }
             };
             xhr.send(JSON.stringify({pw:a}));
@@ -31,7 +31,8 @@
                     tryLogin(inputPass.value)
                     inputPass.select();
                 }
-            })
+            });
+            inputPass.focus();
         })
     </script>
 </head>
@@ -39,7 +40,7 @@
 <body>
     <div class="p-login">
         <div class="box">
-            <input type="password" placeholder="password"><br>
+            <input type="password" placeholder="Password"><br>
         </div>
     </div>
 </body>
