@@ -18,7 +18,7 @@ To start,
 ```bash
 yarn start
 ```
-![Sample](./public/main.png)
+![Sample](./public/sample.png)
   
 
 

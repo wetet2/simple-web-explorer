@@ -397,7 +397,7 @@ class ExplorerComponent extends React.Component {
                         <S.Icon icon={`/ext/${f.icon}`}
                            backgroundImage={f.isImage ? path.join('/', '__repo', currentDir, f.name) : ''}
                         ></S.Icon>
-                        <S.Name
+                        <S.Name title={f.name}
                            onClick={evt => this.onClickFile(evt, f)}
                            className={this.makeServerPath(f.name) === lastPath ? 'viewed' : ''}>
                            {f.name}
