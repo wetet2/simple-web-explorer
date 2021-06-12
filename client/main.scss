@@ -1,0 +1,262 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@700&display=swap');
+
+@font-face {
+   font-family: 'Noto Sans KR';
+   font-style: normal;
+   font-weight: 100;
+   src: url(/fonts/NotoSansKR-Thin-Hestia.otf) format('opentype');
+}
+
+@font-face {
+   font-family: 'Noto Sans KR';
+   font-style: normal;
+   font-weight: 300;
+   src: url(/fonts/NotoSansKR-Light-Hestia.otf) format('opentype');
+}
+
+@font-face {
+   font-family: 'Noto Sans KR';
+   font-style: normal;
+   font-weight: 350;
+   src: url(/fonts/NotoSansKR-DemiLight-Hestia.otf) format('opentype');
+}
+
+@font-face {
+   font-family: 'Noto Sans KR';
+   font-style: normal;
+   font-weight: 400;
+   src: url(/fonts/NotoSansKR-Regular-Hestia.otf) format('opentype');
+}
+
+@font-face {
+   font-family: 'Noto Sans KR';
+   font-style: normal;
+   font-weight: 500;
+   src: url(/fonts/NotoSansKR-Medium-Hestia.otf) format('opentype');
+}
+
+@font-face {
+   font-family: 'Noto Sans KR';
+   font-style: normal;
+   font-weight: 700;
+   src: url(/fonts/NotoSansKR-Bold-Hestia.otf) format('opentype');
+}
+
+@font-face {
+   font-family: 'Noto Sans KR';
+   font-style: normal;
+   font-weight: 900;
+   src: url(/fonts/NotoSansKR-Black-Hestia.otf) format('opentype');
+}
+
+// #root_main{
+//    display: flex;
+//    flex-direction: column;
+//    min-height: 100vh;
+// }
+
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
+
+$font_noto: 'Noto Sans KR',
+'Malgun Gothic',
+sans-serif;
+
+$font_main: $font_noto;
+
+$input_back: #fff4b8;
+$link_color: #1188ce;
+
+html,
+body,
+button,
+input,
+textarea,
+pre,
+select {
+   font-family: $font_main;
+   font-size: 14px;
+   color: #484848;
+   margin: 0;
+}
+
+body {
+   overflow: hidden;
+}
+
+textarea {
+   border-radius: 0;
+}
+
+textarea:focus {
+   border: 0;
+   outline: none;
+}
+
+a {
+   text-decoration: none;
+   color: inherit;
+   cursor: pointer;
+}
+
+ul,
+li {
+   list-style: none;
+}
+
+button {
+   cursor: pointer;
+   user-select: none;
+}
+
+table {
+   table-layout: fixed;
+   border-collapse: collapse;
+}
+
+::placeholder {
+   color: #999;
+   font-weight: 300;
+}
+
+:-ms-input-placeholder {
+   color: #ddd;
+}
+
+$app-scroll-size: 16px;
+
+::-webkit-scrollbar {
+   width: $app-scroll-size;
+   height: $app-scroll-size;
+
+   &-thumb {
+      position: relative;
+      z-index: 99999;
+      border: 5px solid transparent;
+      background-clip: padding-box;
+      border-radius: 17px;
+      background-color: #cccccc;
+      cursor: pointer;
+   }
+
+   &-thumb:horizontal:hover,
+   &-thumb:vertical:hover {
+      position: relative;
+      z-index: 99999;
+      background-color: #c0c0c0;
+   }
+
+}
+
+.cp {
+   cursor: pointer;
+}
+
+.fill {
+   flex: 1;
+   min-height: 0;
+   min-width: 0;
+}
+
+.flex {
+   display: flex;
+
+   .fill {
+      flex: 1;
+      min-width: 0;
+   }
+
+   &.wrap {
+      flex-wrap: wrap;
+   }
+
+   &.center {
+      align-items: center;
+      justify-content: center;
+   }
+
+   &.between {
+      justify-content: space-between;
+   }
+
+   &.v-center {
+      align-items: center;
+      justify-content: flex-start;
+   }
+
+   &.column {
+      flex-direction: column;
+
+      &.v-center {
+         justify-content: center;
+         align-items: flex-start;
+      }
+
+      &.between {
+         align-items: space-between;
+      }
+
+      .fill {
+         min-width: auto;
+         min-height: 0;
+      }
+
+      &.end {
+         align-items: flex-end;
+      }
+
+   }
+
+   &.end {
+      justify-content: flex-end;
+   }
+}
+
+.ofa {
+   overflow: auto;
+}
+
+@mixin hy-scroll-small($barColor:#ccc, $barThickness: 3px, $barPad: 3px, $topEndPad: 0px, $bottomEndPad: 0px, $leftEndPad: 0px, $rightEndPad: 0px) {
+   &::-webkit-scrollbar {
+      width: $barPad * 2 + $barThickness;
+      height: $barPad * 2 + $barThickness;
+
+      &-track {
+         background-color: hsla(0, 0%, 0%, 0);
+         border-width: 0;
+      }
+
+      &-thumb {
+         border: $barPad solid transparent;
+         background-clip: padding-box;
+         border-radius: $barThickness;
+         background-color: $barColor;
+
+         &:vertical {
+            border-top-width: $topEndPad;
+            border-bottom-width: $bottomEndPad;
+         }
+
+         &:horizontal {
+            border-left-width: $leftEndPad;
+            border-right-width: $rightEndPad;
+         }
+      }
+
+      &-button,
+      &-track-piece,
+      &-corner {
+         display: none;
+      }
+   }
+}
+
+.hy-scroll-small {
+   @include hy-scroll-small
+}
+
+
+//////////////////////////////////////////////////////

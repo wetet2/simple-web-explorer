@@ -1,8 +1,8 @@
 const nopt = require('nopt');
 const knownOpts = {
-   "port": [Number],
-   "root": [String]
+   "port": [Number], // Node 포트
 }
 const nodeArgs = nopt(knownOpts, null, process.argv);
 process.nodeArgs = nodeArgs;
+
 module.exports = {};

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <title>canvas 테스트</title>
+
+   <style>
+      * {
+         box-sizing: border-box;
+         padding: 0;
+         margin: 0;
+      }
+   </style>
+
+   <script>
+      function degreeToRadian(degree) {
+         return degree * (Math.PI / 180);
+      }
+
+      function canvas1() {
+         let canvas = document.querySelector('#canvas1');
+         canvas.width = '400';
+         canvas.height = '400';
+         let ctx = canvas.getContext('2d');
+
+         let center_x = canvas.width / 2;
+         let center_y = canvas.height / 2;
+
+         let startDeg = 0;
+         let deg = 1;
+         let loop = setInterval(function () {
+            if (startDeg <= 360) {
+               ctx.clearRect(0, 0, canvas.width, canvas.height);
+               ctx.fillStyle = '#00ff00';
+               ctx.beginPath();
+               ctx.moveTo(center_x, center_y);
+               ctx.arc(center_x, center_y, 150, degreeToRadian(0), degreeToRadian(startDeg + deg), false);
+               ctx.closePath();
+               ctx.fill();
+               startDeg += deg
+            } else {
+               clearInterval(loop);
+            }
+         }, 10)
+      }
+
+      function drawArc(ctx, color, cx, cy, fromDeg, toDeg) {
+         ctx.fillStyle = color;
+         ctx.beginPath();
+         ctx.moveTo(cx, cy);
+         ctx.arc(cx, cy, 150, degreeToRadian(fromDeg), degreeToRadian(fromDeg + toDeg), false);
+         ctx.closePath();
+         ctx.fill();
+      }
+
+      function drawText(ctx, text, color, deg) {
+         ctx.save();
+         ctx.fillStyle = color;
+         ctx.font = "bold 14px 돋움";
+         ctx.translate(200, 200)
+         ctx.rotate(deg * Math.PI / 180);
+         ctx.translate(-200, -200);
+         ctx.fillText(text, 290, 207)
+         ctx.restore();
+      }
+
+      function canvas2() {
+         let canvas = document.querySelector('#canvas2');
+         canvas.width = '400';
+         canvas.height = '400';
+         let center_x = canvas.width / 2;
+         let center_y = canvas.height / 2;
+         let ctx = canvas.getContext('2d');
+
+         ctx.clearRect(0, 0, canvas.width, canvas.height);
+         drawArc(ctx, '#00ff00', center_x, center_y, -90, 30);
+         drawArc(ctx, '#003fff', center_x, center_y, -60, 45);
+         drawArc(ctx, '#ff0000', center_x, center_y, -15, 60);
+         drawArc(ctx, '#ffff00', center_x, center_y, 45, 90);
+         drawArc(ctx, '#00ffff', center_x, center_y, 135, 135);
+
+         drawText(ctx, '이호윤', "#000", -75);
+         drawText(ctx, '이호윤', "#fff", -37.5);
+         drawText(ctx, '이호윤', "#fff", 15);
+         drawText(ctx, '이호윤', "#000", 90);
+         drawText(ctx, '이호윤', "#000", 197.5);
+
+      }
+
+      document.addEventListener('DOMContentLoaded', function () {
+         canvas1();
+         canvas2();
+      })
+
+      function run(){
+         document.querySelector('#canvas2').style.transform = 'rotate(7200deg)';
+      }
+
+      
+   </script>
+
+</head>
+
+<body>
+   <canvas id="canvas1"></canvas>
+   <br />
+   <canvas id="canvas2" style="border: 1px solid #000; transition: all 20s cubic-bezier(0, 0, 0, 1.01); transform: rotate( 0deg );"></canvas>
+
+   <button onclick="run()">돌리기</button>
+</body>
+
+</html>

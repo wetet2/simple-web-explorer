@@ -1,10 +1,5 @@
 {
-    "editor.tabSize": 4,
-    "liveSassCompile.settings.formats":[
-        {
-            "format": "expanded",
-            "extensionName": ".css",
-        }
-    ],
-    "liveSassCompile.settings.generateMap": false
+   "editor.tabSize": 3, // 파일들여쓰기 3 space로 함
+   "editor.insertSpaces": true, // 파일들여쓰기 적용을 위한 옵션
+   "editor.detectIndentation": false // 파일들여쓰기 적용을 위한 옵션
 }
