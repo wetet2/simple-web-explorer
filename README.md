@@ -18,8 +18,7 @@ To start,
 ```bash
 yarn start
 ```
-   
-<kbd>![Sample](https://github.com/wetet2/simple-web-explorer/blob/master/doc/pc_img.png)  </kbd>
+![Sample](./public/main.png)
   
 
 
