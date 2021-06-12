@@ -1,5 +1,5 @@
 # simple-web-explorer
-This is a reponsive web file explorer on NodeJS with Express such as IIS Directory search.  
+This is a reponsive web file explorer on NodeJS with Express and React such as IIS Directory search.  
 simple-web-explorer is made for sharing files and viewing some images easily.
 It's very useful and convenient sharing something with coworkers.
 
