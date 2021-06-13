@@ -1,15 +1,14 @@
 let config = {
    dateFormat: 'YYYY-MM-DD HH:mm:ss.SSS',
-   loginPassList: ['dldk1004', 'votmdnjem', 'vptmdnjem', '1028', '1004'],
-   adminPassList: ['dldk1004', '1028'],
-   repoLocation: '/home/pi/nodejs/repository',
-   rootStorage: '/home/pi/nodejs/repository/explorer',
+   loginPassList: ['1028'],
+   adminPassList: ['1028'],
+   rootStorage: '/home/pi/nodejs/output',
 
    prefixForHidden: '_h_',
    searchExclude: ['node_modules', '.vscode', '.git'],
 
    // Need MongoDB for login. if you dont need login, change config.useLogin to false.
-   useLogin: false,
+   useLogin: true,
    sessionExpireMinutes: 60,
 }
 

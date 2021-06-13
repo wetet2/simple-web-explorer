@@ -15,7 +15,6 @@ export const Input = styled.input`
    height: 30px;
    border: 0;
    background-color: #fff;
-   -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
    text-align: center;
    outline: none;

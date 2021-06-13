@@ -55,7 +55,7 @@ class LoginComponent extends React.Component {
       return (
          <S.LoginBox className="">
             <div>
-               <S.Input type="password" placeholder="암호는 한글로 '패스워드'" placeholderTextColor="#cecece" value={inputPass} ref={this.refInput}
+               <S.Input type="password" placeholder="Key" placeholderTextColor="#cecece" value={inputPass} ref={this.refInput}
                   onKeyDown={this.onKeyDown} onChange={evt => this.setState({ inputPass: evt.target.value })} />
             </div>
          </S.LoginBox>
