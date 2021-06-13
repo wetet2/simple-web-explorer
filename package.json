@@ -42,9 +42,11 @@
    },
    "scripts": {
       "start:dev": "cross-env NODE_ENV=development node ./node_modules/nodemon/bin/nodemon server/index --watch server --port 10001",
-      "start": "cross-env NODE_ENV=production node server/index --watch server --port 80",
+      "start": "cross-env NODE_ENV=production node server/index --watch server",
       "build:dev": "npx webpack --config webpack.dev.js --watch",
-      "build": "npx webpack --config webpack.prod.js"
+      "build": "npx webpack --config webpack.prod.js",
+      "reg:pm2": "cross-env NODE_ENV=production pm2 start server.index.js --name=\"Web Explorer\" --watch=\"server\""
+
    },
    "devDependencies": {
       "@babel/cli": "^7.8.4",
