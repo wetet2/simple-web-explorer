@@ -45,7 +45,7 @@
       "start": "cross-env NODE_ENV=production node server/index --watch server",
       "build:dev": "npx webpack --config webpack.dev.js --watch",
       "build": "npx webpack --config webpack.prod.js",
-      "reg:pm2": "cross-env NODE_ENV=production pm2 start server.index.js --name=\"Web Explorer\" --watch=\"server\""
+      "reg:pm2": "cross-env NODE_ENV=production pm2 start server/index.js --name=\"Web Explorer\" --watch=\"server\""
 
    },
    "devDependencies": {
