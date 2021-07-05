@@ -7,7 +7,7 @@ module.exports = {
    searchExclude: ['node_modules', '.vscode', '.git'],
 
    /* Need MongoDB for login. if you dont need login, change config.useLogin to false. */
-   useLogin: false,
+   useLogin: true,
    sessionExpireMinutes: 60,
    mongo: {
       connStr: `mongodb://localhost`, options: {
