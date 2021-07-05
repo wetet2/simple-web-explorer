@@ -26,22 +26,20 @@ class ExplorerComponent extends React.Component {
       this.refProgress = React.createRef();
       this.refTxtFilter = React.createRef();
    }
-   async componentDidMount() {
+   componentDidMount() {
 
       this.props.history.listen((location, action) => {
          this.loadList(this.getParam('dir'));
       });
 
       this.loadList(this.getParam('dir'));
-
-      if (this.refUpload.current) {
-         this.refUpload.current.addEventListener('change', this.onChangeFileUpload)
-      }
+      this.refUpload.current.addEventListener('change', this.onChangeFileUpload)
 
       document.body.addEventListener('click', this.clearContentMenu)
 
-      await ajax('/api/trace', { params: { page: 'explorer' } })
+      // await ajax('/api/trace', { params: { page: 'explorer' } })
    }
+
 
    componentWillUnmount() {
       document.body.removeEventListener('click', this.clearContentMenu)
@@ -339,9 +337,7 @@ class ExplorerComponent extends React.Component {
                {
                   this.props.isAdmin &&
                   <>
-                     <S.TopIcon icon={`upload`} bgSize={18} title="파일 업로드" onClick={() => this.refUpload.current.click()}>
-                        <input type="file" multiple ref={this.refUpload} style={{ display: 'none' }} />
-                     </S.TopIcon>
+                     <S.TopIcon icon={`upload`} bgSize={18} title="파일 업로드" onClick={() => this.refUpload.current.click()} />
 
                      <S.TopIcon icon={`newfolder`} bgSize={20} title="새폴더" onClick={this.onClickNewFolder} />
                   </>
@@ -427,6 +423,7 @@ class ExplorerComponent extends React.Component {
                      </S.Row>
                   ))
                }
+               <input type="file" multiple ref={this.refUpload} style={{ display: 'none' }} />
             </S.FileList>
          </>
       )
