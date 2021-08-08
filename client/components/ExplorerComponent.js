@@ -93,7 +93,7 @@ class ExplorerComponent extends React.Component {
       ls.set(LAST_FILE_PATH, fullPath);
       await ajax('/api/trace', { params: { page: fullPath, action: 'click' } })
       // location.href = fullPath;
-      window.open('about:blank').location.href = fullPath;
+      window.location.href = fullPath;
       this.setState({ lastPath: fullPath })
    }
 
